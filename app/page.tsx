@@ -81,9 +81,9 @@ export default function Home() {
           {/* Hero description */}
           <div className="relative z-30 mt-[650px] text-center px-4 mb-12">
             <div className="max-w-3xl mx-auto text-[#141b33]">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">🚀 Digital Magic, Minus the BS.</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6"> Digital Magic, Minus the BS.</h2>
               <p className="text-xl font-medium mb-8">
-                We're your all-in-one creative tech squad—mixing killer designs, code, and marketing strategy so you
+                We're your all-in-one creative tech squad mixing killer designs, code, and marketing strategy so you
                 don't have to juggle 10 freelancers.
               </p>
 
@@ -124,7 +124,7 @@ export default function Home() {
           <div className="p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center">
             <div className="max-w-2xl mx-auto md:mx-0">
               <div className="bg-[#141b33] text-white py-2 px-4 sm:px-6 inline-block transform -rotate-2 mb-6 sm:mb-8">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Our Vibe? Win-Win-Win.</h2>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Our Energy? Purpose-Driven, Always.</h2>
               </div>
               <div className="space-y-6 sm:space-y-8 text-[#141b33]">
                 <p className="text-base sm:text-lg lg:text-xl font-medium">
@@ -202,7 +202,7 @@ export default function Home() {
             style={{ minHeight: "220px" }}
           >
             <div className="flex items-baseline mb-4">
-              <span className="text-7xl font-black text-[#141b33]">50</span>
+              <span className="text-7xl font-black text-[#141b33]">30</span>
               <span className="text-4xl font-black text-[#141b33]">+</span>
             </div>
             <h3 className="text-2xl font-bold tracking-wider text-[#141b33] uppercase">Happy Clients</h3>
@@ -214,7 +214,7 @@ export default function Home() {
             style={{ minHeight: "220px" }}
           >
             <div className="flex items-baseline mb-4">
-              <span className="text-7xl font-black text-[#141b33]">100</span>
+              <span className="text-7xl font-black text-[#141b33]">70</span>
               <span className="text-4xl font-black text-[#141b33]">+</span>
             </div>
             <h3 className="text-2xl font-bold tracking-wider text-[#141b33] uppercase">Projects Delivered</h3>
