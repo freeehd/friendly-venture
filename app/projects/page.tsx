@@ -152,9 +152,9 @@ export default function ProjectsPage() {
       <ElasticNav />
 
       {/* Hero Section */}
-      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-[#a7d8f2] py-16 px-4 md:px-8">
+      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-t-4 border-[#141b33] bg-[#a7d8f2] py-16 px-4 md:px-8">
         <div className="text-center">
-          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform -rotate-1 mb-8">
+          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform  mb-8">
             <h1 className="text-3xl md:text-5xl font-bold uppercase">Our Portfolio</h1>
           </div>
           <p className="text-xl md:text-2xl text-[#141b33] max-w-4xl mx-auto mb-8">
@@ -263,7 +263,7 @@ export default function ProjectsPage() {
 
                 {/* View Details Button */}
                 <button className="w-full bg-[#141b33] text-white py-3 px-6 rounded-lg font-bold hover:bg-[#1f2b4d] transition-colors">
-                  View Full Case Study →
+                  View Full Case Study 
                 </button>
               </div>
             </div>
@@ -274,7 +274,7 @@ export default function ProjectsPage() {
       {/* Call to Action Section */}
       <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-[#ffda55] py-16 px-4 md:px-8">
         <div className="text-center">
-          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform rotate-1 mb-8">
+          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform  mb-8">
             <h2 className="text-2xl md:text-4xl font-bold uppercase">Ready to Join This List?</h2>
           </div>
           <p className="text-xl text-[#141b33] max-w-3xl mx-auto mb-8">
@@ -286,7 +286,7 @@ export default function ProjectsPage() {
               href="/#contact"
               className="bg-[#141b33] text-white py-4 px-8 rounded-full text-lg font-bold hover:bg-[#1f2b4d] transition-colors inline-block"
             >
-              Start Your Project →
+              Start Your Project 
             </Link>
             <Link
               href="/#team"
@@ -301,8 +301,8 @@ export default function ProjectsPage() {
       {/* Process Section */}
       <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-16 px-4 md:px-8">
         <div className="text-center mb-12">
-          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform -rotate-1 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold uppercase">Our Process (The Secret Sauce)</h2>
+          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold uppercase">Our Approach (Works for Everything)</h2>
           </div>
         </div>
 
@@ -310,26 +310,26 @@ export default function ProjectsPage() {
           {[
             {
               step: "01",
-              title: "Discovery & Strategy",
-              description: "We dig deep into your goals, audience, and competition. No assumptions, just data.",
+              title: "Understand & Analyze",
+              description: "We dive into your business goals, market position, and target audience to create a data-driven strategy that works.",
               color: "#ffcdb2",
             },
             {
               step: "02",
-              title: "Design & Prototype",
-              description: "We create stunning designs and interactive prototypes that bring your vision to life.",
+              title: "Plan & Strategize",
+              description: "Whether it's a website, marketing campaign, or SEO strategy, we craft a detailed roadmap for success.",
               color: "#c1e1c1",
             },
             {
               step: "03",
-              title: "Build & Test",
-              description: "Our developers work their magic while we test everything obsessively.",
+              title: "Execute & Optimize",
+              description: "Our team brings the plan to life, continuously monitoring and refining for maximum impact.",
               color: "#ffc8dd",
             },
             {
               step: "04",
-              title: "Launch & Optimize",
-              description: "We launch with fanfare and keep optimizing based on real user data.",
+              title: "Scale & Grow",
+              description: "We measure results, identify opportunities, and help you scale your success across all channels.",
               color: "#ffd166",
             },
           ].map((process, index) => (
@@ -344,6 +344,8 @@ export default function ProjectsPage() {
             </div>
           ))}
         </div>
+
+      
       </div>
 
       {/* Footer spacing */}

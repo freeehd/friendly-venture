@@ -95,7 +95,7 @@ export default function Home() {
                   href="#contact"
                   className="bg-[#141b33] text-white py-3 px-10 rounded-full text-lg font-bold hover:bg-[#1f2b4d] transition-colors"
                 >
-                  Let's make cool stuff →
+                  Let's make cool stuff 
                 </Link>
               </div>
             </div>
@@ -108,10 +108,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Letter tiles carousel */}
+      {/* Letter tiles carousel
       <div className="w-full max-w-[1500px] flex justify-center">
         <InfiniteLetterCarousel />
-      </div>
+      </div> */}
 
       {/* Our Values section - improved responsiveness */}
       <div
@@ -127,7 +127,7 @@ export default function Home() {
           <div className="p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center">
             <div className="max-w-2xl mx-auto md:mx-0">
               <div className="bg-[#141b33] text-white py-2 px-4 sm:px-6 inline-block transform  mb-6 sm:mb-8">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Our Energy? Purpose-Driven, Always.</h2>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Our Energy? Purpose Driven, Always.</h2>
               </div>
               <div className="space-y-6 sm:space-y-8 text-[#141b33]">
                 <p className="text-base sm:text-lg lg:text-xl font-medium">
@@ -159,7 +159,7 @@ export default function Home() {
 
                 <div className="p-4 sm:p-6 bg-[#ffda55] rounded-lg border-2 border-[#141b33]">
                   <p className="text-sm sm:text-base md:text-lg font-medium italic">
-                    "Think of us as your business's backstage crew—we make you look good while having a blast doing it."
+                    "Think of us as your business's backstage crew, we make you look good while having a blast doing it."
                   </p>
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function Home() {
         className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white p-4 md:p-8 lg:p-12"
       >
         <div className="bg-[#141b33] text-white py-2 px-6 inline-block transform  mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold">Hit Us Up (We Don't Bite… Hard)</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">Hit Us Up </h2>
         </div>
 
         <p className="text-xl text-[#141b33] mb-8">
@@ -296,7 +296,7 @@ export default function Home() {
             </div>
 
             <button className="w-full bg-[#141b33] text-white py-4 px-8 rounded-lg text-lg font-bold hover:bg-[#1f2b4d] transition-colors">
-              Send it! 🚀
+              Send it! 
             </button>
           </div>
 
@@ -304,7 +304,7 @@ export default function Home() {
           <div className="space-y-6">
             <div className="p-6 border-4 border-[#141b33] rounded-lg bg-[#ffda55]">
               <h3 className="text-xl font-bold text-[#141b33] mb-3">💬 Prefer memes over emails?</h3>
-              <p className="text-[#141b33]">DM us on Instagram @thefriendlyventure</p>
+              {/* <p className="text-[#141b33]">DM us on Instagram @thefriendlyventure</p> */}
             </div>
 
             <div className="p-6 border-4 border-[#141b33] rounded-lg bg-[#a0e7e5]">

@@ -22,7 +22,7 @@ export default function MeetTheTeam() {
   const [backgroundColor, setBackgroundColor] = useState("#ffcdb2") // Default peach color
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
-  // Replace the teamMembers state with the new data structure:
+  // Updated team members array with unique images for each member
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
     {
       id: 1,
@@ -105,7 +105,7 @@ export default function MeetTheTeam() {
     {
       id: 5,
       designation: "UI/UX DESIGNER",
-      image: "/images/just-intern-b.png",
+      image: "/images/design-b.png",
       backgroundColor: "#ffd166",
       headline: "🧩 User-Centered Designs for Websites, Apps, and Dashboards",
       whatWeDo:
@@ -138,7 +138,7 @@ export default function MeetTheTeam() {
     {
       id: 7,
       designation: "CONTENT WRITER",
-      image: "/images/just-designer.png",
+      image: "/images/finance-b.png",
       backgroundColor: "#ffb3ba",
       headline: "✍️ SEO-Optimized, Brand-Driven Content Across Formats",
       whatWeDo:
@@ -153,7 +153,7 @@ export default function MeetTheTeam() {
     {
       id: 8,
       designation: "DIGITAL GROWTH STRATEGIST",
-      image: "/images/just-dev.png",
+      image: "/images/design-a.png",
       backgroundColor: "#bae1ff",
       headline: "📈 Full-Stack Growth Strategy Across Acquisition, Retention, and Funnel Optimization",
       whatWeDo:
@@ -167,49 +167,62 @@ export default function MeetTheTeam() {
         "Reworked retention strategy → doubled monthly recurring revenue",
       ],
     },
+    // Additional team members using only existing images
     {
       id: 9,
-      designation: "COMIC DESIGNER",
-      image: "/images/just-strat.png",
-      backgroundColor: "#ffffba",
-      headline: "🎭 Storyboarding, Character Design, and Digital Comics for Brand Storytelling",
+      designation: "FINANCE MANAGER",
+      image: "/images/intern-a.png",
+      backgroundColor: "#e8f5e8",
+      headline: "💰 Strategic Financial Planning & Budget Optimization",
       whatWeDo:
-        "Our Comic Designer creates engaging visual narratives that make complex ideas accessible and memorable. We use the power of storytelling to connect with audiences in unique and entertaining ways.",
+        "Our Finance Manager ensures your business stays profitable and grows sustainably. From budget planning to financial forecasting, we handle the numbers so you can focus on what you do best.",
       expertiseIncludes: [
-        "Procreate, Clip Studio Paint, Adobe Fresco",
-        "Sequential art, visual humor, short-form storytelling",
+        "Financial planning & analysis",
+        "Budget management & cost optimization",
+        "Cash flow forecasting",
+        "Investment analysis & ROI tracking",
       ],
-      pastWork: ["Instagram comic series for wellness brand", "Branded educational comic for a sustainability NGO"],
+      pastWork: [
+        "Reduced operational costs by 25% for a tech startup",
+        "Managed $2M+ budgets across multiple projects",
+      ],
     },
     {
       id: 10,
-      designation: "BLOCKCHAIN DEVELOPER",
-      image: "/images/just-intern.png",
-      backgroundColor: "#d4c5f9",
-      headline: "🧬 Smart Contracts, NFTs, DApps, and Secure Web3 Solutions",
+      designation: "JUNIOR DEVELOPER",
+      image: "/images/dev-b.png",
+      backgroundColor: "#f0f8ff",
+      headline: "💻 Fresh Perspective on Modern Development",
       whatWeDo:
-        "Our Blockchain Developer builds secure, decentralized applications and smart contracts that leverage the power of blockchain technology. We create innovative Web3 solutions that position your business at the forefront of digital innovation.",
-      expertiseIncludes: ["Solidity, Rust, Ethereum, Polygon, IPFS", "Truffle, Hardhat, Metamask integrations"],
-      pastWork: ["NFT marketplace MVP on Polygon", "DAO architecture for a creative collective"],
+        "Our Junior Developer brings fresh energy and modern coding practices to every project. Eager to learn and quick to adapt, they're perfect for implementing the latest technologies and trends.",
+      expertiseIncludes: [
+        "React, Next.js, TypeScript",
+        "Mobile app development",
+        "API integration",
+        "Modern development tools",
+      ],
+      pastWork: ["Built responsive web apps for 3 startups", "Contributed to open-source projects"],
     },
     {
       id: 11,
-      designation: "MOBILE APP DEVELOPER",
+      designation: "SENIOR DESIGNER",
       image: "/images/just-intern-b.png",
-      backgroundColor: "#c7ceea",
-      headline: "📱 iOS, Android, Cross-Platform App Development",
+      backgroundColor: "#f5f0e8",
+      headline: "🎨 Sophisticated Design Leadership",
       whatWeDo:
-        "Our Mobile App Developer creates native and cross-platform mobile applications that deliver exceptional user experiences. We build apps that are fast, intuitive, and designed to drive user engagement and retention.",
-      expertiseIncludes: ["Flutter, React Native, Swift, Kotlin", "Firebase, Stripe, REST APIs"],
-      pastWork: [
-        "Fitness app for Gen Z audience with habit tracking",
-        "On-demand service booking app for local businesses",
+        "Our Senior Designer brings years of experience and a keen eye for detail to every project. From concept to execution, they ensure your brand stands out with sophisticated, impactful design.",
+      expertiseIncludes: [
+        "Brand strategy & identity design",
+        "Art direction & creative leadership",
+        "Print & digital design mastery",
+        "Team mentoring & design systems",
       ],
+      pastWork: ["Led rebranding for Fortune 500 company", "Award-winning packaging design campaigns"],
     },
   ])
 
-  // State for displayed team members (show 4 at a time)
-  const [displayedMembers, setDisplayedMembers] = useState<TeamMember[]>(teamMembers.slice(0, 4))
+  // State for displayed team members (show 8 at a time)
+  const [displayedMembers, setDisplayedMembers] = useState<TeamMember[]>(teamMembers.slice(0, 8))
 
   const [mousePositions, setMousePositions] = useState<Record<number, { x: number; y: number }>>({})
 
@@ -235,7 +248,7 @@ export default function MeetTheTeam() {
       setBackgroundColor("#ffcdb2")
     } else {
       // Find the hovered team member and set background to their card color
-      const member = teamMembers.find((m) => m.id === id)
+      const member = displayedMembers.find((m) => m.id === id)
       if (member) {
         setBackgroundColor(member.backgroundColor)
       }
@@ -257,14 +270,14 @@ export default function MeetTheTeam() {
     }))
   }
 
-  // Enhanced shuffle team function with animation
+  // Enhanced shuffle team function with improved animation
   const shuffleTeam = () => {
     if (isShuffling) return // Prevent multiple shuffles during animation
 
     setIsShuffling(true)
     setAnimatingOut(true)
 
-    // First phase: animate cards out
+    // First phase: animate cards out with staggered timing
     setTimeout(() => {
       // Create a copy of the team members array
       const shuffled = [...teamMembers]
@@ -275,15 +288,15 @@ export default function MeetTheTeam() {
         ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
       }
 
-      // Update the displayed members with the first 4 from shuffled array
-      setDisplayedMembers(shuffled.slice(0, 4))
+      // Update the displayed members with the first 8 from shuffled array
+      setDisplayedMembers(shuffled.slice(0, 8))
       setAnimatingOut(false)
 
-      // Second phase: animate cards in
+      // Second phase: animate cards in with staggered timing
       setTimeout(() => {
         setIsShuffling(false)
-      }, 100)
-    }, 600) // Wait for cards to animate out
+      }, 200)
+    }, 800) // Wait for cards to animate out
   }
 
   // Add a function to handle card click
@@ -314,22 +327,24 @@ export default function MeetTheTeam() {
 
   return (
     <div
-      id="dream-team" // Added proper ID for navigation
-      className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] py-28 px-4 relative"
+      id="dream-team"
+      className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] py-28 px-4 relative overflow-hidden"
       style={{
         backgroundColor: backgroundColor,
         transition: "background-color 0.5s ease-in-out",
       }}
     >
       {/* Title banner */}
-      <div className="flex justify-center mb-12">
-        <div className="bg-[#141b33] text-white py-3 px-8 transform -rotate-1">
-          <h2 className="text-3xl font-bold uppercase">Meet the Dream Team (But Like, Actually Skilled)</h2>
+      <div className="flex justify-center mb-16">
+        <div className="bg-[#141b33] text-white py-4 px-10 transform -rotate-1 shadow-lg">
+          <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wide">
+            Meet the Dream Team (But Like, Actually Skilled)
+          </h2>
         </div>
       </div>
 
-      {/* Team member cards */}
-      <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-12">
+      {/* Team member cards - improved grid layout */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-16 max-w-[1200px] mx-auto">
         {displayedMembers.map((member, index) => {
           const mousePos = mousePositions[member.id] || { x: 0, y: 0 }
           const isHovered = hoveredCard === member.id
@@ -349,45 +364,52 @@ export default function MeetTheTeam() {
               }}
               onMouseMove={(e) => handleMouseMove(e, member.id)}
               onClick={() => handleCardClick(member)}
-              className={`w-[220px] md:w-[250px] transform transition-all duration-300 hover:scale-105 hover:-rotate-2 cursor-pointer mb-4 ${
-                animatingOut ? "animate-shuffle-out" : isShuffling ? "animate-shuffle-in" : ""
+              className={`group transform transition-all duration-500 hover:scale-110 hover:-rotate-3 cursor-pointer ${
+                animatingOut ? "animate-enhanced-shuffle-out" : isShuffling ? "animate-enhanced-shuffle-in" : ""
               }`}
               style={{
                 transform:
                   isHovered && !isShuffling
-                    ? `scale(1.05) rotate(-2deg) perspective(1000px) rotateY(${mousePos.x * 20}deg) rotateX(${mousePos.y * -20}deg)`
+                    ? `scale(1.1) rotate(-3deg) perspective(1000px) rotateY(${mousePos.x * 25}deg) rotateX(${mousePos.y * -25}deg)`
                     : "scale(1) rotate(0deg)",
-                transition: isShuffling ? "none" : "transform 0.2s ease-out",
-                animationDelay: `${index * 100}ms`, // Stagger the animations
+                transition: isShuffling ? "none" : "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                animationDelay: `${index * 150}ms`, // Increased stagger for better effect
               }}
             >
-              <div className="w-full h-[380px] overflow-hidden rounded-lg border-4 border-white shadow-lg relative">
-                <div className="w-full h-full p-4 flex flex-col" style={{ backgroundColor: member.backgroundColor }}>
-                  {/* Team member image with parallax effect */}
-                  <div className="flex-1 relative overflow-hidden">
+              <div className="w-full h-[400px] md:h-[420px] overflow-hidden rounded-2xl border-4 border-white shadow-2xl relative group-hover:shadow-3xl transition-shadow duration-300">
+                <div
+                  className="w-full h-full p-6 flex flex-col relative"
+                  style={{ backgroundColor: member.backgroundColor }}
+                >
+                  {/* Subtle gradient overlay for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+
+                  {/* Team member image with enhanced parallax effect */}
+                  <div className="flex-1 relative overflow-hidden rounded-lg">
                     <div
-                      className="absolute inset-0 transition-transform duration-200"
+                      className="absolute inset-0 transition-transform duration-300"
                       style={{
                         transform:
                           isHovered && !isShuffling
-                            ? `translate(${mousePos.x * -15}px, ${mousePos.y * -15}px)`
-                            : "translate(0, 0)",
+                            ? `translate(${mousePos.x * -20}px, ${mousePos.y * -20}px) scale(1.1)`
+                            : "translate(0, 0) scale(1)",
                       }}
                     >
                       <Image
                         src={member.image || "/placeholder.svg"}
                         alt={member.designation}
                         fill
-                        className="object-contain"
+                        className="object-contain transition-transform duration-300 group-hover:scale-105"
                       />
                     </div>
                   </div>
 
-                  {/* Name and role */}
+                  {/* Enhanced name and role section */}
                   <div className="mt-auto relative z-10">
-                    {/* Update the card display to show only designation: */}
-                    <div className="bg-[#141b33] text-white py-2 px-4 text-center">
-                      <h3 className="text-lg md:text-xl font-bold">{member.designation}</h3>
+                    <div className="bg-[#141b33] text-white py-3 px-4 text-center rounded-lg shadow-lg transform transition-transform duration-300 group-hover:scale-105">
+                      <h3 className="text-sm md:text-lg font-bold uppercase tracking-wide leading-tight">
+                        {member.designation}
+                      </h3>
                     </div>
                   </div>
                 </div>
@@ -397,35 +419,58 @@ export default function MeetTheTeam() {
         })}
       </div>
 
-      {/* Shuffle button */}
+      {/* Enhanced shuffle button */}
       <div className="flex justify-center">
         <button
           onClick={shuffleTeam}
           disabled={isShuffling}
-          className={`py-3 px-8 rounded-full text-lg font-bold transition-all duration-300 ${
+          className={`relative py-4 px-10 rounded-full text-xl font-bold transition-all duration-300 transform ${
             isShuffling
-              ? "bg-gray-400 text-gray-600 cursor-not-allowed"
-              : "bg-[#141b33] text-white hover:bg-[#1f2b4d] hover:scale-105"
-          }`}
+              ? "bg-gray-400 text-gray-600 cursor-not-allowed scale-95"
+              : "bg-[#141b33] text-white hover:bg-[#1f2b4d] hover:scale-110 hover:shadow-2xl active:scale-95"
+          } shadow-lg`}
         >
-          {isShuffling ? "Shuffling..." : "Shuffle the squad"}
+          <span className={`transition-opacity duration-300 ${isShuffling ? "opacity-0" : "opacity-100"}`}>
+            Shuffle the squad
+          </span>
+          {isShuffling && (
+            <span className="absolute inset-0 flex items-center justify-center">
+              <svg className="animate-spin h-6 w-6 mr-2" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              Shuffling...
+            </span>
+          )}
         </button>
       </div>
 
-      {/* Modal - improve for mobile */}
+      {/* Enhanced modal */}
       {showModal && selectedMember && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
           onClick={closeModal}
           onMouseMove={handleModalMouseMove}
         >
           <div
-            className="relative max-w-4xl w-full flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8"
+            className="relative max-w-5xl w-full flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
+            {/* Enhanced close button */}
             <button
-              className="absolute top-2 right-2 text-white bg-[#141b33] rounded-full w-10 h-10 flex items-center justify-center z-10"
+              className="absolute top-4 right-4 text-white bg-[#141b33] rounded-full w-12 h-12 flex items-center justify-center z-10 hover:bg-[#1f2b4d] transition-colors duration-200 shadow-lg"
               onClick={closeModal}
             >
               <svg
@@ -444,23 +489,26 @@ export default function MeetTheTeam() {
               </svg>
             </button>
 
-            {/* Character card - adjust size for mobile */}
+            {/* Enhanced character card */}
             <div
               ref={characterCardRef}
-              className="w-[250px] md:w-[280px] h-[380px] md:h-[420px] rounded-lg border-4 border-white shadow-lg physics-card-left"
+              className="w-[280px] md:w-[320px] h-[420px] md:h-[480px] rounded-2xl border-4 border-white shadow-2xl physics-card-left"
               style={{
                 backgroundColor: selectedMember.backgroundColor,
-                transform: `perspective(1000px) rotateY(${modalMousePosition.x * 10}deg) rotateX(${modalMousePosition.y * -10}deg) rotate(-5deg)`,
+                transform: `perspective(1000px) rotateY(${modalMousePosition.x * 15}deg) rotateX(${modalMousePosition.y * -15}deg) rotate(-5deg)`,
                 transition: "transform 0.2s ease-out",
               }}
             >
-              <div className="w-full h-full p-4 flex flex-col">
+              <div className="w-full h-full p-6 flex flex-col relative">
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none rounded-2xl" />
+
                 {/* Team member image with parallax effect */}
-                <div className="flex-1 relative overflow-hidden">
+                <div className="flex-1 relative overflow-hidden rounded-xl">
                   <div
                     className="absolute inset-0 transition-transform duration-200"
                     style={{
-                      transform: `translate(${modalMousePosition.x * -10}px, ${modalMousePosition.y * -10}px)`,
+                      transform: `translate(${modalMousePosition.x * -15}px, ${modalMousePosition.y * -15}px) scale(1.05)`,
                     }}
                   >
                     <Image
@@ -472,61 +520,71 @@ export default function MeetTheTeam() {
                   </div>
                 </div>
 
-                {/* Name and role */}
-                <div className="mt-auto">
-                  {/* Remove the name from the character card in the modal and update it to show designation: */}
-                  <div className="bg-[#141b33] text-white py-2 px-4 text-center">
-                    <h3 className="text-xl md:text-2xl font-bold">{selectedMember.designation}</h3>
+                {/* Enhanced name and role */}
+                <div className="mt-auto relative z-10">
+                  <div className="bg-[#141b33] text-white py-3 px-4 text-center rounded-xl shadow-lg">
+                    <h3 className="text-lg md:text-2xl font-bold uppercase tracking-wide">
+                      {selectedMember.designation}
+                    </h3>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Update the modal content to show the new structure: */}
-            {/* Description card */}
+            {/* Enhanced description card */}
             <div
               ref={descriptionCardRef}
-              className="w-[280px] md:w-[400px] h-[500px] md:h-[600px] rounded-lg border-4 border-white shadow-lg bg-[#141b33] text-white p-4 md:p-6 physics-card-right overflow-y-auto"
+              className="w-[320px] md:w-[450px] h-[550px] md:h-[650px] rounded-2xl border-4 border-white shadow-2xl bg-[#141b33] text-white p-6 md:p-8 physics-card-right overflow-y-auto"
               style={{
-                transform: `perspective(1000px) rotateY(${modalMousePosition.x * 10}deg) rotateX(${modalMousePosition.y * -10}deg) rotate(5deg)`,
+                transform: `perspective(1000px) rotateY(${modalMousePosition.x * 15}deg) rotateX(${modalMousePosition.y * -15}deg) rotate(5deg)`,
                 transition: "transform 0.2s ease-out",
               }}
             >
-              <h2 className="text-xl md:text-2xl font-bold mb-2">{selectedMember.designation}</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 text-yellow-400">{selectedMember.designation}</h2>
 
-              <h3 className="text-lg md:text-xl font-bold text-gray-300 mb-4">{selectedMember.headline}</h3>
+              <h3 className="text-lg md:text-xl font-bold text-gray-300 mb-6 leading-relaxed">
+                {selectedMember.headline}
+              </h3>
 
-              <div className="mb-4">
-                <h4 className="text-md font-bold mb-2 text-yellow-400">What We Do:</h4>
-                <p className="text-sm md:text-base mb-4">{selectedMember.whatWeDo}</p>
+              <div className="mb-6">
+                <h4 className="text-lg font-bold mb-3 text-yellow-400 flex items-center">
+                  <span className="mr-2">🎯</span>
+                  What We Do:
+                </h4>
+                <p className="text-sm md:text-base mb-4 leading-relaxed text-gray-200">{selectedMember.whatWeDo}</p>
               </div>
 
-              <div className="mb-4">
-                <h4 className="text-md font-bold mb-2 text-yellow-400">Expertise Includes:</h4>
-                <ul className="text-sm md:text-base space-y-1">
+              <div className="mb-6">
+                <h4 className="text-lg font-bold mb-3 text-yellow-400 flex items-center">
+                  <span className="mr-2">⚡</span>
+                  Expertise Includes:
+                </h4>
+                <ul className="text-sm md:text-base space-y-2">
                   {selectedMember.expertiseIncludes.map((skill, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="text-yellow-400 mr-2">•</span>
-                      <span>{skill}</span>
+                      <span className="text-yellow-400 mr-3 mt-1">•</span>
+                      <span className="text-gray-200">{skill}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mb-4">
-                <h4 className="text-md font-bold mb-2 text-yellow-400">Past Work:</h4>
-                <ul className="text-sm md:text-base space-y-2 mb-4">
+              <div className="mb-6">
+                <h4 className="text-lg font-bold mb-3 text-yellow-400 flex items-center">
+                  <span className="mr-2">🏆</span>
+                  Past Work:
+                </h4>
+                <ul className="text-sm md:text-base space-y-3 mb-6">
                   {selectedMember.pastWork.map((work, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="text-yellow-400 mr-2">•</span>
-                      <span>{work}</span>
+                      <span className="text-yellow-400 mr-3 mt-1">•</span>
+                      <span className="text-gray-200">{work}</span>
                     </li>
                   ))}
                 </ul>
                 <button
-                  className="w-full bg-yellow-400 text-[#141b33] py-2 px-4 rounded-lg font-bold hover:bg-yellow-300 transition-colors"
+                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#141b33] py-3 px-6 rounded-xl font-bold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-200 transform hover:scale-105 shadow-lg"
                   onClick={() => {
-                    // Navigate to projects page - you can implement this based on your routing setup
                     window.open("/projects", "_blank")
                   }}
                 >

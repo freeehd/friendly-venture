@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import MobileNav from "./mobile-nav"
+import { usePathname } from "next/navigation"
 
 export default function ElasticNav() {
   const [scrolled, setScrolled] = useState(false)
   const [activeLink, setActiveLink] = useState("home")
+  const pathname = usePathname()
+  const isProjectsPage = pathname === "/projects"
 
   // Track scroll position
   useEffect(() => {
@@ -23,14 +26,15 @@ export default function ElasticNav() {
     }
   }, [scrolled])
 
-  const navLinks = [
-    { name: "Home", id: "home" },
-    { name: "Our Vibe", id: "values" },
-    { name: "Dream Team", id: "dream-team" }, // Fixed ID to match the section ID
-    { name: "Hit Us Up", id: "contact" },
-    { name: "Projects", id: "projects", href: "/projects" },
-
-  ]
+  const navLinks = isProjectsPage 
+    ? [{ name: "Home", id: "home", href: "/" }]
+    : [
+        { name: "Home", id: "home" },
+        { name: "Our Vibe", id: "values" },
+        { name: "Dream Team", id: "dream-team" },
+        { name: "Hit Us Up", id: "contact" },
+        { name: "Projects", id: "projects", href: "/projects" },
+      ]
 
   return (
     <div
@@ -61,12 +65,12 @@ export default function ElasticNav() {
             className={`px-3 md:px-6 mx-1 md:mx-2 py-1 md:py-2 my-1 rounded-full font-bold transition-all duration-300 ease-in-out text-sm md:text-base focus-ring ${
               scrolled ? "text-sm" : "text-base md:text-lg"
             } ${
-              activeLink === link.id
+              activeLink === link.id || (isProjectsPage && link.id === "home")
                 ? "bg-[#141b33] text-white hover:bg-[#1f2b4d] hover:scale-105 shadow-md"
                 : "bg-white text-[#141b33] border border-[#141b33] hover:bg-gray-100 hover:scale-105 hover:shadow-md"
             }`}
             style={{
-              transform: activeLink === link.id ? "translateY(-2px)" : "none",
+              transform: (activeLink === link.id || (isProjectsPage && link.id === "home")) ? "translateY(-2px)" : "none",
             }}
           >
             {link.name}
@@ -75,7 +79,7 @@ export default function ElasticNav() {
       </div>
 
       {/* Mobile Navigation */}
-      <MobileNav isScrolled={scrolled} activeLink={activeLink} setActiveLink={setActiveLink} />
+      <MobileNav isScrolled={scrolled} activeLink={activeLink} setActiveLink={setActiveLink} isProjectsPage={isProjectsPage} />
     </div>
   )
 }

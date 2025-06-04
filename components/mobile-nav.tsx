@@ -7,18 +7,21 @@ interface MobileNavProps {
   isScrolled: boolean
   activeLink: string
   setActiveLink: (link: string) => void
+  isProjectsPage: boolean
 }
 
-export default function MobileNav({ isScrolled, activeLink, setActiveLink }: MobileNavProps) {
+export default function MobileNav({ isScrolled, activeLink, setActiveLink, isProjectsPage }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const navLinks = [
-    { name: "Home", id: "home" },
-    { name: "Our Vibe", id: "values" },
-    { name: "Dream Team", id: "dream-team" },
-    { name: "Projects", id: "projects", href: "/projects" },
-    { name: "Hit Us Up", id: "contact" },
-  ]
+  const navLinks = isProjectsPage 
+    ? [{ name: "Home", id: "home", href: "/" }]
+    : [
+        { name: "Home", id: "home" },
+        { name: "Our Vibe", id: "values" },
+        { name: "Dream Team", id: "dream-team" },
+        { name: "Hit Us Up", id: "contact" },
+        { name: "Projects", id: "projects", href: "/projects" },
+      ]
 
   // Close menu when clicking outside or on link
   useEffect(() => {
@@ -51,59 +54,56 @@ export default function MobileNav({ isScrolled, activeLink, setActiveLink }: Mob
     <div className="md:hidden">
       {/* Mobile menu button */}
       <button
-        onClick={(e) => {
-          e.stopPropagation()
-          setIsOpen(!isOpen)
-        }}
-        className={`relative z-50 p-2 rounded-full border-2 border-[#141b33] bg-white transition-all duration-300 focus-ring ${
+        onClick={() => setIsOpen(!isOpen)}
+        className={`fixed top-4 right-4 z-50 p-2 rounded-full bg-white/90 backdrop-blur-sm border-4 border-[#141b33] transition-all duration-300 ${
           isScrolled ? "scale-90" : "scale-100"
-        }`}
-        aria-label="Toggle mobile menu"
-        aria-expanded={isOpen}
+        } ${isOpen ? "rotate-90" : ""}`}
       >
-        <div className="w-6 h-6 flex flex-col justify-center items-center">
+        <div className="w-6 h-6 flex flex-col justify-center items-center gap-1.5">
           <span
             className={`block w-5 h-0.5 bg-[#141b33] transition-all duration-300 ${
-              isOpen ? "rotate-45 translate-y-1" : ""
+              isOpen ? "rotate-45 translate-y-2" : ""
             }`}
-          />
+          ></span>
           <span
-            className={`block w-5 h-0.5 bg-[#141b33] mt-1 transition-all duration-300 ${isOpen ? "opacity-0" : ""}`}
-          />
+            className={`block w-5 h-0.5 bg-[#141b33] transition-all duration-300 ${isOpen ? "opacity-0" : ""}`}
+          ></span>
           <span
-            className={`block w-5 h-0.5 bg-[#141b33] mt-1 transition-all duration-300 ${
-              isOpen ? "-rotate-45 -translate-y-1" : ""
+            className={`block w-5 h-0.5 bg-[#141b33] transition-all duration-300 ${
+              isOpen ? "-rotate-45 -translate-y-2" : ""
             }`}
-          />
+          ></span>
         </div>
       </button>
 
-      {/* Mobile menu overlay */}
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsOpen(false)} />}
-
       {/* Mobile menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white border-l-4 border-[#141b33] z-40 transform transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-0 bg-white/95 backdrop-blur-sm z-40 transition-all duration-300 ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
-        onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-6 pt-20">
-          <h2 className="text-2xl font-bold text-[#141b33] mb-8">Navigation</h2>
-          <nav className="space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.id}
-                href={link.href || `#${link.id}`}
-                onClick={() => handleLinkClick(link)}
-                className={`block py-3 px-4 rounded-lg font-bold transition-all duration-300 ${
-                  activeLink === link.id ? "bg-[#141b33] text-white" : "bg-gray-100 text-[#141b33] hover:bg-gray-200"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
+        <div className="flex flex-col items-center justify-center h-full gap-6">
+          {navLinks.map((link) => (
+            <Link
+              key={link.id}
+              href={link.href || `#${link.id}`}
+              onClick={(e) => {
+                if (!link.href) {
+                  e.preventDefault()
+                  setActiveLink(link.id)
+                  document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth" })
+                }
+                setIsOpen(false)
+              }}
+              className={`text-2xl font-bold transition-all duration-300 ${
+                activeLink === link.id || (isProjectsPage && link.id === "home")
+                  ? "text-[#141b33] scale-110"
+                  : "text-gray-600 hover:text-[#141b33] hover:scale-105"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
       </div>
     </div>
