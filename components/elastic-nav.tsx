@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import MobileNav from "./mobile-nav"
 
 export default function ElasticNav() {
   const [scrolled, setScrolled] = useState(false)
@@ -25,9 +26,10 @@ export default function ElasticNav() {
   const navLinks = [
     { name: "Home", id: "home" },
     { name: "Our Vibe", id: "values" },
-    { name: "Dream Team", id: "team" },
-    { name: "Portfolio", id: "projects" },
+    { name: "Dream Team", id: "dream-team" }, // Fixed ID to match the section ID
     { name: "Hit Us Up", id: "contact" },
+    { name: "Projects", id: "projects", href: "/projects" },
+
   ]
 
   return (
@@ -36,8 +38,9 @@ export default function ElasticNav() {
         scrolled ? "py-2" : "py-4 md:py-6"
       }`}
     >
+      {/* Desktop Navigation */}
       <div
-        className={`bg-white/90 backdrop-blur-sm rounded-full border-4 border-[#141b33] flex flex-wrap justify-center items-center px-2 md:px-4 transition-all duration-500 ease-in-out ${
+        className={`hidden md:flex bg-white/90 backdrop-blur-sm rounded-full border-4 border-[#141b33] flex-wrap justify-center items-center px-2 md:px-4 transition-all duration-500 ease-in-out ${
           scrolled ? "py-1 shadow-md scale-95" : "py-2 md:py-3 shadow-xl scale-100 hover:scale-105"
         }`}
         style={{
@@ -47,13 +50,15 @@ export default function ElasticNav() {
         {navLinks.map((link) => (
           <Link
             key={link.id}
-            href={`#${link.id}`}
+            href={link.href || `#${link.id}`}
             onClick={(e) => {
-              e.preventDefault()
-              setActiveLink(link.id)
-              document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth" })
+              if (!link.href) {
+                e.preventDefault()
+                setActiveLink(link.id)
+                document.getElementById(link.id)?.scrollIntoView({ behavior: "smooth" })
+              }
             }}
-            className={`px-3 md:px-6 mx-1 md:mx-2 py-1 md:py-2 my-1 rounded-full font-bold transition-all duration-300 ease-in-out text-sm md:text-base ${
+            className={`px-3 md:px-6 mx-1 md:mx-2 py-1 md:py-2 my-1 rounded-full font-bold transition-all duration-300 ease-in-out text-sm md:text-base focus-ring ${
               scrolled ? "text-sm" : "text-base md:text-lg"
             } ${
               activeLink === link.id
@@ -68,6 +73,9 @@ export default function ElasticNav() {
           </Link>
         ))}
       </div>
+
+      {/* Mobile Navigation */}
+      <MobileNav isScrolled={scrolled} activeLink={activeLink} setActiveLink={setActiveLink} />
     </div>
   )
 }

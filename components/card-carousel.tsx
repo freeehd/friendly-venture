@@ -370,7 +370,10 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
   const getCardStyle = useCallback(
     (relativePosition: number, isHovered: boolean) => {
       // Calculate card sizing - adjust for mobile
-      const baseCardWidth = Math.min(280, containerWidth * 0.35)
+      const isMobile = containerWidth < 768
+      const baseCardWidth = isMobile
+        ? Math.min(200, containerWidth * 0.45) // Larger cards on mobile
+        : Math.min(280, containerWidth * 0.35) // Original size for desktop
 
       // Adjust curve parameters for better spacing
       const curveDepth = 25 // Less pronounced curve
@@ -409,7 +412,9 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
 
       // Calculate horizontal spacing - DECREASED FROM PREVIOUS VERSION
       // Use a slightly smaller percentage of the container width for spacing
-      const cardSpacing = Math.min(320, containerWidth * 0.38) // Decreased for better mobile view
+      const cardSpacing = isMobile
+        ? Math.min(200, containerWidth * 0.25) // Much tighter spacing on mobile
+        : Math.min(320, containerWidth * 0.38) // Original spacing for desktop
 
       const xOffset = relativePosition * cardSpacing
 
@@ -460,7 +465,8 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
 
   // Determine visible cards
   const getVisibleCards = useCallback(() => {
-    const visibleRange = 2 // Show only 2 cards on each side (5 total including center)
+    const isMobile = containerWidth < 768
+    const visibleRange = isMobile ? 1 : 2 // Show fewer cards on mobile (3 total vs 5 total)
     const cards = []
 
     for (let i = activeIndex - visibleRange; i <= activeIndex + visibleRange; i++) {
@@ -469,7 +475,7 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
     }
 
     return cards
-  }, [activeIndex, totalItems])
+  }, [activeIndex, totalItems, containerWidth])
 
   // Get content for a card side
   const getCardContent = useCallback(

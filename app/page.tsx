@@ -1,3 +1,4 @@
+"use client"
 import CardCarousel from "@/components/card-carousel"
 import InfiniteLetterCarousel from "@/components/infinite-letter-carousel"
 import ElasticNav from "@/components/elastic-nav"
@@ -7,6 +8,8 @@ import Image from "next/image"
 import Link from "next/link"
 import SparkCursor from "@/components/spark-cursor"
 import MeetTheTeam from "@/components/meet-the-team"
+import ScrollProgress from "@/components/scroll-progress"
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer"
 
 export default function Home() {
   // Create team member cards for the carousel
@@ -34,8 +37,11 @@ export default function Home() {
     </div>,
   ]
 
+  const { ref: valuesRef, isIntersecting: valuesVisible } = useIntersectionObserver()
+
   return (
     <main className="min-h-screen flex flex-col items-center bg-white pt-44">
+      <ScrollProgress />
       {/* Elastic Navigation Bar */}
       <ElasticNav />
 
@@ -48,7 +54,7 @@ export default function Home() {
         >
           {/* Title banner */}
           <div className="absolute left-0 right-0 z-10" style={{ top: "-40px" }}>
-            <div className="relative mx-auto" style={{ maxWidth: "820px" }}>
+            <div className="relative mx-auto" style={{ maxWidth: "780px" }}>
               <div
                 className="bg-[#141b33] text-white py-6 px-8 w-full"
                 style={{
@@ -59,10 +65,11 @@ export default function Home() {
                 }}
               >
                 <h1
-                  className="concept-capers-title text-4xl md:text-6xl"
+                  className="concept-capers-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl whitespace-nowrap"
                   style={{
                     lineHeight: "0.9",
                     letterSpacing: "-0.01em",
+                    fontSize: "clamp(1.5rem, 4vw, 4rem)",
                   }}
                 >
                   THE FRIENDLY VENTURE
@@ -103,45 +110,52 @@ export default function Home() {
         <InfiniteLetterCarousel />
       </div>
 
-      {/* Our Values section */}
-      <div id="values" className="w-full max-w-[1500px]  mx-auto border-x-4 border-b-4 border-[#141b33] bg-white">
-<div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 md:gap-8 min-h-[600px] lg:min-h-[800px]">
+      {/* Our Values section - improved responsiveness */}
+      <div
+        ref={valuesRef}
+        id="values"
+        className={`w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white transition-all duration-1000 ${
+          valuesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+        style={{ height: "1000px" }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-0 h-full">
           {/* Left column - Values content */}
-          <div className="p-4 md:p-8 lg:p-12 flex flex-col justify-between">
-            <div>
-              <div className="bg-[#141b33] text-white py-2 px-6 inline-block transform -rotate-2 mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold">Our Vibe? Win-Win-Win.</h2>
+          <div className="p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center">
+            <div className="max-w-2xl mx-auto md:mx-0">
+              <div className="bg-[#141b33] text-white py-2 px-4 sm:px-6 inline-block transform -rotate-2 mb-6 sm:mb-8">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Our Vibe? Win-Win-Win.</h2>
               </div>
-              <div className="space-y-6 text-[#141b33]">
-                <p className="text-base md:text-lg lg:text-xl font-medium mb-8">
+              <div className="space-y-6 sm:space-y-8 text-[#141b33]">
+                <p className="text-base sm:text-lg lg:text-xl font-medium">
                   We hacked the system: happy clients + happy creatives = work that slaps.
                 </p>
 
-                <div className="space-y-6">
+                <div className="space-y-6 sm:space-y-8">
                   <div>
-                    <h3 className="text-xl font-bold mb-3">✨ Talent-First</h3>
-                    <p className="text-base md:text-lg">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">✨ Talent-First</h3>
+                    <p className="text-sm sm:text-base md:text-lg">
                       We cherry-pick the dopest designers, devs, and marketers—no mediocre "yes men" here.
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-bold mb-3">✨ No Exploitation, Just Vibes</h3>
-                    <p className="text-base md:text-lg">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">✨ No Exploitation, Just Vibes</h3>
+                    <p className="text-sm sm:text-base md:text-lg">
                       Our team gets paid fairly, works flexibly, and actually likes Mondays.
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-bold mb-3">✨ Zero Fluff</h3>
-                    <p className="text-base md:text-lg">
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">✨ Zero Fluff</h3>
+                    <p className="text-sm sm:text-base md:text-lg">
                       We skip the jargon and deliver real results (with memes sprinkled in).
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-8 p-6 bg-[#ffda55] rounded-lg border-2 border-[#141b33]">
-                  <p className="text-base md:text-lg font-medium italic">
+                <div className="p-4 sm:p-6 bg-[#ffda55] rounded-lg border-2 border-[#141b33]">
+                  <p className="text-sm sm:text-base md:text-lg font-medium italic">
                     "Think of us as your business's backstage crew—we make you look good while having a blast doing it."
                   </p>
                 </div>
@@ -149,26 +163,32 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right column - Interactive animation */}
-          <div
-             className="relative h-full min-h-[600px] md:min-h-[800px] border-t-4 md:border-t-0 md:border-l-4 border-[#141b33]"
-  id="animation-container"
-  style={{ cursor: "none" }}
-          >
-            <AboutUsAnimation />
-            <SparkCursor
-              containerId="animation-container"
-              size={80}
-              textColor="#141b33"
-              backgroundColor="white"
-              iconColor="#ffb17a"
-              text="SPARK AN IDEA"
-              fontSize={19}
-              iconSize={24}
-              rotationSpeed={120}
-              followDelay={0.3}
-              textPadding={8}
-            />
+          {/* Right column - Interactive animation - improved responsiveness */}
+          <div className="relative border-t-4 md:border-t-0 md:border-l-4 border-[#141b33] w-full md:w-auto h-[min(400px,40vh)] md:h-full">
+            <div
+              className="relative w-full h-full overflow-hidden"
+              id="animation-container"
+              style={{ 
+                cursor: "none", 
+                aspectRatio: "3/4",
+                margin: "0 auto"
+              }}
+            >
+              <AboutUsAnimation />
+              <SparkCursor
+                containerId="animation-container"
+                size={80}
+                textColor="#141b33"
+                backgroundColor="white"
+                iconColor="#ffb17a"
+                text="SPARK AN IDEA"
+                fontSize={19}
+                iconSize={24}
+                rotationSpeed={120}
+                followDelay={0.3}
+                textPadding={8}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -179,7 +199,7 @@ export default function Home() {
           {/* Happy Clients */}
           <div
             className="border-4 border-[#141b33] bg-white p-6 md:p-8 flex flex-col items-center justify-center text-center transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl hover:bg-[#ffccd5] cursor-pointer"
-            style={{ minHeight: "220px", md: { minHeight: "280px" } }}
+            style={{ minHeight: "220px" }}
           >
             <div className="flex items-baseline mb-4">
               <span className="text-7xl font-black text-[#141b33]">50</span>
@@ -191,7 +211,7 @@ export default function Home() {
           {/* Projects Delivered */}
           <div
             className="border-4 border-[#141b33] bg-white p-8 flex flex-col items-center justify-center text-center transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl hover:bg-[#a0e7e5] cursor-pointer"
-            style={{ minHeight: "280px" }}
+            style={{ minHeight: "220px" }}
           >
             <div className="flex items-baseline mb-4">
               <span className="text-7xl font-black text-[#141b33]">100</span>
@@ -203,7 +223,7 @@ export default function Home() {
           {/* Coffee Consumed */}
           <div
             className="border-4 border-[#141b33] bg-white p-8 flex flex-col items-center justify-center text-center transition-all duration-300 hover:transform hover:scale-105 hover:shadow-xl hover:bg-[#b5ead7] cursor-pointer"
-            style={{ minHeight: "280px" }}
+            style={{ minHeight: "220px" }}
           >
             <div className="flex items-baseline mb-4">
               <span className="text-7xl font-black text-[#141b33]">∞</span>
@@ -217,86 +237,7 @@ export default function Home() {
       <ParallaxColleagues />
 
       {/* Meet the Team section */}
-      <div  id="team" className="w-full" >
-        <MeetTheTeam />
-      </div>
-
-      {/* Projects Portfolio section */}
-      <div id="projects" className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white">
-        <div className="p-4 md:p-8 lg:p-12">
-          <div className="bg-[#141b33] text-white py-2 px-6 inline-block transform -rotate-2 mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold">Proof in the Pudding (a.k.a. Our Portfolio)</h2>
-          </div>
-
-          <p className="text-xl text-[#141b33] mb-12">
-            From eCommerce beasts to blockchain bling, here's work we're stupidly proud of.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {/* Project 1 */}
-            <div className="border-4 border-[#141b33] p-6 bg-[#ffcdb2] hover:transform hover:scale-105 transition-all duration-300">
-              <h3 className="text-2xl font-bold text-[#141b33] mb-4">🛒 "Swipe Right Fashion"</h3>
-              <p className="text-[#141b33] mb-4">
-                <strong>What We Did:</strong> Built a Shopify store + Instagram strategy that boosted sales by 300%.
-              </p>
-              <div className="bg-white p-4 rounded border-2 border-[#141b33]">
-                <p className="italic text-[#141b33]">
-                  "These guys get it. Also, their Slack GIF game? 10/10." - Sarah, Founder
-                </p>
-              </div>
-            </div>
-
-            {/* Project 2 */}
-            <div className="border-4 border-[#141b33] p-6 bg-[#c1e1c1] hover:transform hover:scale-105 transition-all duration-300">
-              <h3 className="text-2xl font-bold text-[#141b33] mb-4">🔗 "NFTs for Dog Lovers"</h3>
-              <p className="text-[#141b33] mb-4">
-                <strong>What We Did:</strong> Designed + developed a Web3 platform for adoptable pup NFTs (yes, it's as
-                cute as it sounds).
-              </p>
-              <div className="bg-white p-4 rounded border-2 border-[#141b33]">
-                <p className="italic text-[#141b33]">"Went from idea to launch in 4 weeks. Sorcery." - Mike, CEO</p>
-              </div>
-            </div>
-
-            {/* Project 3 */}
-            <div className="border-4 border-[#141b33] p-6 bg-[#ffc8dd] hover:transform hover:scale-105 transition-all duration-300">
-              <h3 className="text-2xl font-bold text-[#141b33] mb-4">📱 "Fitness App Revolution"</h3>
-              <p className="text-[#141b33] mb-4">
-                <strong>What We Did:</strong> Created a gamified fitness app with social features that got 10K downloads
-                in the first month.
-              </p>
-              <div className="bg-white p-4 rounded border-2 border-[#141b33]">
-                <p className="italic text-[#141b33]">
-                  "My users are actually excited about working out now. Magic!" - Lisa, Fitness Coach
-                </p>
-              </div>
-            </div>
-
-            {/* Project 4 */}
-            <div className="border-4 border-[#141b33] p-6 bg-[#ffd166] hover:transform hover:scale-105 transition-all duration-300">
-              <h3 className="text-2xl font-bold text-[#141b33] mb-4">🏢 "Corporate Rebrand Magic"</h3>
-              <p className="text-[#141b33] mb-4">
-                <strong>What We Did:</strong> Complete brand overhaul + website redesign that increased lead generation
-                by 250%.
-              </p>
-              <div className="bg-white p-4 rounded border-2 border-[#141b33]">
-                <p className="italic text-[#141b33]">
-                  "We went from boring to brilliant. Our competitors are shook." - David, Marketing Director
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <Link
-              href="#contact"
-              className="bg-[#141b33] text-white py-3 px-10 rounded-full text-lg font-bold hover:bg-[#1f2b4d] transition-colors"
-            >
-              Got a project? Let's chat →
-            </Link>
-          </div>
-        </div>
-      </div>
+      <MeetTheTeam />
 
       {/* Contact Us section */}
       <div
@@ -379,6 +320,20 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Projects CTA Section */}
+      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-[#a7d8f2] p-12 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#141b33]">Want to see what we've built?</h2>
+        <p className="text-xl text-[#141b33] mb-8 max-w-2xl mx-auto">
+          Check out our portfolio of projects that showcase our skills, creativity, and results.
+        </p>
+        <Link
+          href="/projects"
+          className="inline-block bg-[#141b33] text-white py-3 px-10 rounded-full text-lg font-bold hover:bg-[#1f2b4d] transition-colors"
+        >
+          View Our Projects →
+        </Link>
       </div>
 
       {/* Footer with some spacing */}

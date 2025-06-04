@@ -26,6 +26,7 @@ export default function AboutUsAnimation() {
   const [isCharacterAnimating, setIsCharacterAnimating] = useState(false)
   const isAnimatingRef = useRef(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const [containerHeight, setContainerHeight] = useState(0)
 
   // Available icon images
   const iconImages = [
@@ -36,6 +37,36 @@ export default function AboutUsAnimation() {
     "/images/clock.png",
     "/images/headphones.png",
   ]
+
+  // Update container height on resize
+  useEffect(() => {
+    const updateHeight = () => {
+      if (containerRef.current) {
+        setContainerHeight(containerRef.current.clientHeight)
+      }
+    }
+
+    // Initial height
+    updateHeight()
+
+    // Set up resize observer for more responsive updates
+    if (typeof ResizeObserver !== "undefined") {
+      const resizeObserver = new ResizeObserver(updateHeight)
+      if (containerRef.current) {
+        resizeObserver.observe(containerRef.current)
+      }
+      return () => {
+        if (containerRef.current) {
+          resizeObserver.unobserve(containerRef.current)
+        }
+        resizeObserver.disconnect()
+      }
+    } else {
+      // Fallback to window resize event
+      window.addEventListener("resize", updateHeight)
+      return () => window.removeEventListener("resize", updateHeight)
+    }
+  }, [])
 
   // Generate a random icon
   const generateIcon = (index: number): AnimatedIcon => {
@@ -148,16 +179,28 @@ export default function AboutUsAnimation() {
       className="relative w-full h-full bg-[#ffda55] overflow-hidden cursor-pointer"
       onClick={handleClick}
     >
-      {/* Character container */}
+      {/* Character container - improved responsiveness */}
       <div
         ref={characterRef}
-        className="absolute  w-full max-w-[960px] h-[800px] transition-transform duration-300 overflow-hidden"
+        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex items-end justify-center transition-transform duration-300"
         style={{
-          transform: ` scale(${isCharacterAnimating ? 1.05 : 1})`,
+          transform: `translate(-50%, 0) scale(${isCharacterAnimating ? 1.05 : 1})`,
+          aspectRatio: "3/4",
+          height: "120%",
+          maxWidth: "120%"
         }}
       >
-        {/* Character image */}
-        <Image src="/images/ideas-girl.png" alt="Ideas Girl" fill  className="object-cover object-top w-full h-full" priority />
+        {/* Character image - improved responsiveness */}
+        <div className="relative w-full h-full">
+          <Image
+            src="/images/ideas-girl.png"
+            alt="Ideas Girl"
+            fill
+            className="object-contain object-bottom"
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
 
         {/* Glow effect */}
         {isGlowing && (
