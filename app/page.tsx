@@ -53,26 +53,29 @@ export default function Home() {
           style={{ minHeight: "950px" }}
         >
           {/* Title banner */}
-          <div className="absolute left-0 right-0 z-10" style={{ top: "-40px" }}>
-            <div className="relative mx-auto" style={{ maxWidth: "780px" }}>
+          <div className="absolute left-0 right-0 z-10" style={{ top: "clamp(-30px, -3vh, -40px)" }}>
+            <div className="relative mx-auto px-4 sm:px-6 md:px-8" style={{ 
+              maxWidth: "clamp(300px, 90vw, 780px)",
+              width: "100%"
+            }}>
               <div
-                className="bg-[#141b33] text-white py-6 px-8 w-full"
+                className="bg-[#141b33] text-white py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 w-full"
                 style={{
-                  height: "110px",
+                  height: "clamp(80px, 10vh, 110px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
                 <h1
-                  className="concept-capers-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl whitespace-nowrap"
+                  className="concept-capers-title text-2xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-4xl whitespace-nowrap"
                   style={{
                     lineHeight: "0.9",
                     letterSpacing: "-0.01em",
-                    fontSize: "clamp(1.5rem, 4vw, 4rem)",
+                    fontSize: "clamp(1.75rem, 3.5vw, 2.9rem)",
                   }}
                 >
-                  THE FRIENDLY VENTURE
+                  THE FRIENDLY VERTICAL
                 </h1>
               </div>
             </div>
@@ -123,7 +126,7 @@ export default function Home() {
           {/* Left column - Values content */}
           <div className="p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center">
             <div className="max-w-2xl mx-auto md:mx-0">
-              <div className="bg-[#141b33] text-white py-2 px-4 sm:px-6 inline-block transform -rotate-2 mb-6 sm:mb-8">
+              <div className="bg-[#141b33] text-white py-2 px-4 sm:px-6 inline-block transform  mb-6 sm:mb-8">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Our Energy? Purpose-Driven, Always.</h2>
               </div>
               <div className="space-y-6 sm:space-y-8 text-[#141b33]">
@@ -147,9 +150,9 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">✨ Zero Fluff</h3>
+                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">✨ No Nonsense. Just Results.                    </h3>
                     <p className="text-sm sm:text-base md:text-lg">
-                      We skip the jargon and deliver real results (with memes sprinkled in).
+                    We cut through the noise and focus on what moves the needle.
                     </p>
                   </div>
                 </div>
@@ -244,7 +247,7 @@ export default function Home() {
         id="contact"
         className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white p-4 md:p-8 lg:p-12"
       >
-        <div className="bg-[#141b33] text-white py-2 px-6 inline-block transform -rotate-2 mb-6">
+        <div className="bg-[#141b33] text-white py-2 px-6 inline-block transform  mb-6">
           <h2 className="text-2xl md:text-3xl font-bold">Hit Us Up (We Don't Bite… Hard)</h2>
         </div>
 
