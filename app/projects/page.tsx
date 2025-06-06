@@ -1,6 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
 import ElasticNav from "@/components/elastic-nav"
+import { metadata } from "./metadata"
+import { ProjectsJsonLd } from "@/components/json-ld"
+
+export { metadata }
 
 export default function ProjectsPage() {
   // Project data with more detailed information
@@ -19,7 +23,7 @@ export default function ProjectsPage() {
       testimonial: "These guys get it. Also, their Slack GIF game? 10/10.",
       clientName: "Sarah, Founder",
       backgroundColor: "#ffcdb2",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=400&fit=crop&crop=center",
       tags: ["E-commerce", "Shopify", "Social Media", "Fashion"],
     },
     {
@@ -36,7 +40,7 @@ export default function ProjectsPage() {
       testimonial: "Went from idea to launch in 4 weeks. Sorcery.",
       clientName: "Mike, CEO",
       backgroundColor: "#c1e1c1",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=600&h=400&fit=crop&crop=center",
       tags: ["Web3", "NFT", "Blockchain", "Social Impact"],
     },
     {
@@ -53,7 +57,7 @@ export default function ProjectsPage() {
       testimonial: "My users are actually excited about working out now. Magic!",
       clientName: "Lisa, Fitness Coach",
       backgroundColor: "#ffc8dd",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&crop=center",
       tags: ["Mobile App", "Fitness", "Gamification", "Social"],
     },
     {
@@ -70,7 +74,7 @@ export default function ProjectsPage() {
       testimonial: "We went from boring to brilliant. Our competitors are shook.",
       clientName: "David, Marketing Director",
       backgroundColor: "#ffd166",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop&crop=center",
       tags: ["Branding", "Web Design", "Corporate", "Lead Generation"],
     },
     {
@@ -87,7 +91,7 @@ export default function ProjectsPage() {
       testimonial: "Our users finally understand our product. Game changer.",
       clientName: "Alex, Product Manager",
       backgroundColor: "#c8b6e2",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center",
       tags: ["SaaS", "UX Design", "Dashboard", "User Research"],
     },
     {
@@ -104,7 +108,7 @@ export default function ProjectsPage() {
       testimonial: "The platform handles our trading volume like a dream.",
       clientName: "Jordan, CTO",
       backgroundColor: "#a0c4ff",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&h=400&fit=crop&crop=center",
       tags: ["Fintech", "Crypto", "Trading", "Security"],
     },
     {
@@ -121,7 +125,7 @@ export default function ProjectsPage() {
       testimonial: "This AI actually understands our brand voice. Incredible.",
       clientName: "Maria, Creative Director",
       backgroundColor: "#ffb3ba",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop&crop=center",
       tags: ["AI", "Content", "Automation", "Machine Learning"],
     },
     {
@@ -138,7 +142,7 @@ export default function ProjectsPage() {
       testimonial: "Finally, a platform that matches our values with great UX.",
       clientName: "Emma, Founder",
       backgroundColor: "#bae1ff",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&h=400&fit=crop&crop=center",
       tags: ["Marketplace", "Sustainability", "Fashion", "Community"],
     },
   ]
@@ -148,13 +152,13 @@ export default function ProjectsPage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center bg-white pt-24">
-      {/* Elastic Navigation Bar */}
+      <ProjectsJsonLd />
       <ElasticNav />
 
       {/* Hero Section */}
-      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-t-4 border-[#141b33] bg-[#a7d8f2] py-16 px-4 md:px-8">
+      <section className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-t-4 border-[#141b33] bg-[#a7d8f2] py-16 px-4 md:px-8">
         <div className="text-center">
-          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform  mb-8">
+          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform mb-8">
             <h1 className="text-3xl md:text-5xl font-bold uppercase">Our Portfolio</h1>
           </div>
           <p className="text-xl md:text-2xl text-[#141b33] max-w-4xl mx-auto mb-8">
@@ -163,7 +167,7 @@ export default function ProjectsPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-[#141b33] mb-8">
             <div className="bg-white border-2 border-[#141b33] px-4 py-2 rounded-full">
-              <span className="font-bold">50+ Projects Delivered</span>
+              <span className="font-bold">70+ Projects Delivered</span>
             </div>
             <div className="bg-white border-2 border-[#141b33] px-4 py-2 rounded-full">
               <span className="font-bold">100% Client Satisfaction</span>
@@ -179,10 +183,10 @@ export default function ProjectsPage() {
             ← Back to Home
           </Link>
         </div>
-      </div>
+      </section>
 
       {/* Filter Section */}
-      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-8 px-4 md:px-8">
+      <section className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-8 px-4 md:px-8">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-[#141b33] mb-4">Filter by Category</h2>
           <div className="flex flex-wrap justify-center gap-3">
@@ -199,20 +203,27 @@ export default function ProjectsPage() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Projects Grid */}
-      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-8 px-4 md:px-8">
+      <section className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-8 px-4 md:px-8">
+        <h2 className="sr-only">Our Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div
+            <article
               key={project.id}
+              id={`project-${project.id}`}
               className="border-4 border-[#141b33] rounded-lg overflow-hidden hover:transform hover:scale-105 hover:rotate-1 transition-all duration-300 cursor-pointer"
               style={{ backgroundColor: project.backgroundColor }}
             >
               {/* Project Image */}
               <div className="relative h-64 overflow-hidden">
-                <Image src={project.image || "/placeholder.svg"} alt={project.title} fill className="object-cover" />
+                <Image 
+                  src={project.image || "/placeholder.svg"} 
+                  alt={`${project.title} - ${project.category} project showcasing ${project.description}`}
+                  fill 
+                  className="object-cover" 
+                />
                 <div className="absolute top-4 left-4">
                   <span className="bg-[#141b33] text-white px-3 py-1 rounded-full text-sm font-bold">
                     {project.year}
@@ -266,15 +277,15 @@ export default function ProjectsPage() {
                   View Full Case Study 
                 </button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* Call to Action Section */}
-      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-[#ffda55] py-16 px-4 md:px-8">
+      <section className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-[#ffda55] py-16 px-4 md:px-8">
         <div className="text-center">
-          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform  mb-8">
+          <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform mb-8">
             <h2 className="text-2xl md:text-4xl font-bold uppercase">Ready to Join This List?</h2>
           </div>
           <p className="text-xl text-[#141b33] max-w-3xl mx-auto mb-8">
@@ -296,10 +307,10 @@ export default function ProjectsPage() {
             </Link>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Process Section */}
-      <div className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-16 px-4 md:px-8">
+      <section className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-16 px-4 md:px-8">
         <div className="text-center mb-12">
           <div className="bg-[#141b33] text-white py-3 px-8 inline-block transform mb-8">
             <h2 className="text-2xl md:text-3xl font-bold uppercase">Our Approach (Works for Everything)</h2>
@@ -333,7 +344,7 @@ export default function ProjectsPage() {
               color: "#ffd166",
             },
           ].map((process, index) => (
-            <div
+            <article
               key={index}
               className="border-4 border-[#141b33] p-6 rounded-lg hover:transform hover:scale-105 transition-all duration-300"
               style={{ backgroundColor: process.color }}
@@ -341,12 +352,10 @@ export default function ProjectsPage() {
               <div className="text-4xl font-black text-[#141b33] mb-4">{process.step}</div>
               <h3 className="text-xl font-bold text-[#141b33] mb-3">{process.title}</h3>
               <p className="text-[#141b33]">{process.description}</p>
-            </div>
+            </article>
           ))}
         </div>
-
-      
-      </div>
+      </section>
 
       {/* Footer spacing */}
       <div className="w-full py-8 bg-white"></div>

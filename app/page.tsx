@@ -10,6 +10,7 @@ import SparkCursor from "@/components/spark-cursor"
 import MeetTheTeam from "@/components/meet-the-team"
 import ScrollProgress from "@/components/scroll-progress"
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer"
+import { useState } from "react"
 
 export default function Home() {
   // Create team member cards for the carousel
@@ -38,6 +39,60 @@ export default function Home() {
   ]
 
   const { ref: valuesRef, isIntersecting: valuesVisible } = useIntersectionObserver()
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  })
+  const [formStatus, setFormStatus] = useState<{
+    type: "success" | "error" | null
+    message: string
+  }>({ type: null, message: "" })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setFormStatus({ type: null, message: "" })
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message")
+      }
+
+      setFormStatus({
+        type: "success",
+        message: "Message sent successfully! We'll get back to you soon.",
+      })
+      setFormData({ name: "", email: "", subject: "", message: "" })
+    } catch (error) {
+      setFormStatus({
+        type: "error",
+        message: error instanceof Error ? error.message : "Failed to send message",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   return (
     <main className="min-h-screen flex flex-col items-center bg-white pt-44">
@@ -258,46 +313,84 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Contact Form */}
           <div className="space-y-6">
-            <div>
-              <label className="block text-lg font-bold text-[#141b33] mb-2">Your Name</label>
-              <input
-                type="text"
-                placeholder="Batman works, we don't judge"
-                className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg"
-              />
-            </div>
+            {formStatus.type && (
+              <div
+                className={`p-4 rounded-lg ${
+                  formStatus.type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                }`}
+              >
+                {formStatus.message}
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-lg font-bold text-[#141b33] mb-2">Your Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Batman works, we don't judge"
+                  className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg"
+                  required
+                />
+              </div>
 
-            <div>
-              <label className="block text-lg font-bold text-[#141b33] mb-2">Email</label>
-              <input
-                type="email"
-                placeholder="not_a_scam@trustmebro.com"
-                className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg"
-              />
-            </div>
+              <div>
+                <label className="block text-lg font-bold text-[#141b33] mb-2">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="not_a_scam@trustmebro.com"
+                  className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg"
+                  required
+                />
+              </div>
 
-            <div>
-              <label className="block text-lg font-bold text-[#141b33] mb-2">What's the vibe?</label>
-              <select className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg">
-                <option>I need a website</option>
-                <option>Marketing SOS</option>
-                <option>Just wanna say hi</option>
-                <option>Let's build something epic</option>
-              </select>
-            </div>
+              <div>
+                <label className="block text-lg font-bold text-[#141b33] mb-2">What's the vibe?</label>
+                <select
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg"
+                  required
+                >
+                  <option value="">Select an option</option>
+                  <option value="I need a website">I need a website</option>
+                  <option value="Marketing SOS">Marketing SOS</option>
+                  <option value="Just wanna say hi">Just wanna say hi</option>
+                  <option value="Let's build something epic">Let's build something epic</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-lg font-bold text-[#141b33] mb-2">Tell us more</label>
-              <textarea
-                rows={4}
-                placeholder="Spill the tea about your project..."
-                className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg"
-              ></textarea>
-            </div>
+              <div>
+                <label className="block text-lg font-bold text-[#141b33] mb-2">Tell us more</label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Spill the tea about your project..."
+                  className="w-full p-4 border-4 border-[#141b33] rounded-lg text-lg"
+                  required
+                ></textarea>
+              </div>
 
-            <button className="w-full bg-[#141b33] text-white py-4 px-8 rounded-lg text-lg font-bold hover:bg-[#1f2b4d] transition-colors">
-              Send it! 
-            </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full bg-[#141b33] text-white py-4 px-8 rounded-lg text-lg font-bold transition-colors ${
+                  isSubmitting
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-[#1f2b4d]"
+                }`}
+              >
+                {isSubmitting ? "Sending..." : "Send it!"}
+              </button>
+            </form>
           </div>
 
           {/* Contact Info */}

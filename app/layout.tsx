@@ -1,23 +1,24 @@
-import type React from "react"
-import "./globals.css"
+import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import "./globals.css"
+import { defaultMetadata } from "./metadata"
 import { ThemeProvider } from "@/components/theme-provider"
+import { OrganizationJsonLd } from "@/components/json-ld"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export const metadata = {
-  title: "Concept Capers",
-  description: "A creative card game for agency professionals",
-    generator: 'v0.dev'
-}
+export const metadata: Metadata = defaultMetadata
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="en">
+      <head>
+        <OrganizationJsonLd />
+      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
