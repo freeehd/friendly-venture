@@ -167,58 +167,59 @@ export default function MeetTheTeam() {
         "Reworked retention strategy → doubled monthly recurring revenue",
       ],
     },
-    // Additional team members using only existing images
     {
       id: 9,
-      designation: "FINANCE MANAGER",
-      image: "/images/intern-a.png",
-      backgroundColor: "#e8f5e8",
-      headline: "💰 Strategic Financial Planning & Budget Optimization",
-      whatWeDo:
-        "Our Finance Manager ensures your business stays profitable and grows sustainably. From budget planning to financial forecasting, we handle the numbers so you can focus on what you do best.",
-      expertiseIncludes: [
-        "Financial planning & analysis",
-        "Budget management & cost optimization",
-        "Cash flow forecasting",
-        "Investment analysis & ROI tracking",
-      ],
-      pastWork: [
-        "Reduced operational costs by 25% for a tech startup",
-        "Managed $2M+ budgets across multiple projects",
-      ],
-    },
-    {
-      id: 10,
-      designation: "JUNIOR DEVELOPER",
+      designation: "BLOCKCHAIN DEVELOPER",
       image: "/images/dev-b.png",
       backgroundColor: "#f0f8ff",
-      headline: "💻 Fresh Perspective on Modern Development",
+      headline: "🔗 Building the Future of Web3",
       whatWeDo:
-        "Our Junior Developer brings fresh energy and modern coding practices to every project. Eager to learn and quick to adapt, they're perfect for implementing the latest technologies and trends.",
+        "Our Blockchain Developer brings cutting-edge Web3 expertise to every project. From smart contracts to DeFi protocols, they're perfect for implementing the latest blockchain technologies and decentralized solutions.",
       expertiseIncludes: [
-        "React, Next.js, TypeScript",
-        "Mobile app development",
-        "API integration",
-        "Modern development tools",
+        "Solidity, Web3.js, Ethers.js",
+        "Smart contract development",
+        "DeFi protocol integration",
+        "Blockchain infrastructure",
       ],
-      pastWork: ["Built responsive web apps for 3 startups", "Contributed to open-source projects"],
+      pastWork: ["Built DeFi protocols for 3 startups", "Contributed to open-source blockchain projects"],
     },
-    {
-      id: 11,
-      designation: "SENIOR DESIGNER",
-      image: "/images/just-intern-b.png",
-      backgroundColor: "#f5f0e8",
-      headline: "🎨 Sophisticated Design Leadership",
-      whatWeDo:
-        "Our Senior Designer brings years of experience and a keen eye for detail to every project. From concept to execution, they ensure your brand stands out with sophisticated, impactful design.",
-      expertiseIncludes: [
-        "Brand strategy & identity design",
-        "Art direction & creative leadership",
-        "Print & digital design mastery",
-        "Team mentoring & design systems",
-      ],
-      pastWork: ["Led rebranding for Fortune 500 company", "Award-winning packaging design campaigns"],
-    },
+    // Additional team members using only existing images
+    // {
+    //   id: 9,
+    //   designation: "FINANCE MANAGER",
+    //   image: "/images/intern-a.png",
+    //   backgroundColor: "#e8f5e8",
+    //   headline: "💰 Strategic Financial Planning & Budget Optimization",
+    //   whatWeDo:
+    //     "Our Finance Manager ensures your business stays profitable and grows sustainably. From budget planning to financial forecasting, we handle the numbers so you can focus on what you do best.",
+    //   expertiseIncludes: [
+    //     "Financial planning & analysis",
+    //     "Budget management & cost optimization",
+    //     "Cash flow forecasting",
+    //     "Investment analysis & ROI tracking",
+    //   ],
+    //   pastWork: [
+    //     "Reduced operational costs by 25% for a tech startup",
+    //     "Managed $2M+ budgets across multiple projects",
+    //   ],
+    // },
+   
+    // {
+    //   id: 11,
+    //   designation: "SENIOR DESIGNER",
+    //   image: "/images/just-intern-b.png",
+    //   backgroundColor: "#f5f0e8",
+    //   headline: "🎨 Sophisticated Design Leadership",
+    //   whatWeDo:
+    //     "Our Senior Designer brings years of experience and a keen eye for detail to every project. From concept to execution, they ensure your brand stands out with sophisticated, impactful design.",
+    //   expertiseIncludes: [
+    //     "Brand strategy & identity design",
+    //     "Art direction & creative leadership",
+    //     "Print & digital design mastery",
+    //     "Team mentoring & design systems",
+    //   ],
+    //   pastWork: ["Led rebranding for Fortune 500 company", "Award-winning packaging design campaigns"],
+    // },
   ])
 
   // State for displayed team members (show 8 at a time)
@@ -336,7 +337,7 @@ export default function MeetTheTeam() {
     >
       {/* Title banner */}
       <div className="flex justify-center mb-16">
-        <div className="bg-[#141b33] text-white py-4 px-10 transform -rotate-1 shadow-lg">
+        <div className="bg-[#141b33] text-white py-4 px-10 transform  shadow-lg">
           <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wide">
             Meet the Dream Team (But Like, Actually Skilled)
           </h2>

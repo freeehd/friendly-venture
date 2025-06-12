@@ -176,7 +176,7 @@ export default function AboutUsAnimation() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full bg-[#ffda55] overflow-hidden cursor-pointer"
+      className="relative w-full h-full bg-[#ffda55] overflow-hidden "
       onClick={handleClick}
     >
       {/* Character container - improved responsiveness */}

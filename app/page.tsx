@@ -6,11 +6,10 @@ import AboutUsAnimation from "@/components/about-us-animation"
 import ParallaxColleagues from "@/components/parallax-colleagues"
 import Image from "next/image"
 import Link from "next/link"
-import SparkCursor from "@/components/spark-cursor"
 import MeetTheTeam from "@/components/meet-the-team"
 import ScrollProgress from "@/components/scroll-progress"
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export default function Home() {
   // Create team member cards for the carousel
@@ -36,9 +35,55 @@ export default function Home() {
     <div key="7" className="w-full h-full overflow-hidden rounded-xl">
       <Image src="/images/card-8-creative-director.png" alt="Tech Lead" fill className="object-cover" />
     </div>,
+    <div key="8" className="w-full h-full overflow-hidden rounded-xl">
+      <Image src="/images/card-1-intern-female.png" alt="UX/UI Designer" fill className="object-cover" />
+    </div>,
+    <div key="9" className="w-full h-full overflow-hidden rounded-xl">
+      <Image src="/images/card-2-developer.png" alt="Blockchain Developer" fill className="object-cover" />
+    </div>,
   ]
 
   const { ref: valuesRef, isIntersecting: valuesVisible } = useIntersectionObserver()
+  const emojiCursorRef = useRef<HTMLDivElement>(null)
+
+  // Emoji cursor functionality
+  useEffect(() => {
+    const animationContainer = document.getElementById('animation-container')
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (emojiCursorRef.current) {
+        emojiCursorRef.current.style.left = e.clientX + 'px'
+        emojiCursorRef.current.style.top = e.clientY + 'px'
+      }
+    }
+
+    const handleMouseEnter = () => {
+      if (emojiCursorRef.current) {
+        emojiCursorRef.current.style.opacity = '1'
+      }
+    }
+
+    const handleMouseLeave = () => {
+      if (emojiCursorRef.current) {
+        emojiCursorRef.current.style.opacity = '0'
+      }
+    }
+
+    // Add event listeners to the animation container specifically
+    if (animationContainer) {
+      animationContainer.addEventListener('mousemove', handleMouseMove)
+      animationContainer.addEventListener('mouseenter', handleMouseEnter)
+      animationContainer.addEventListener('mouseleave', handleMouseLeave)
+    }
+
+    return () => {
+      if (animationContainer) {
+        animationContainer.removeEventListener('mousemove', handleMouseMove)
+        animationContainer.removeEventListener('mouseenter', handleMouseEnter)
+        animationContainer.removeEventListener('mouseleave', handleMouseLeave)
+      }
+    }
+  }, [])
 
   const [formData, setFormData] = useState({
     name: "",
@@ -95,28 +140,45 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center bg-white pt-44">
+    <main className="min-h-screen flex flex-col items-center bg-white pt-20 sm:pt-32 md:pt-44">
       <ScrollProgress />
       {/* Elastic Navigation Bar */}
       <ElasticNav />
+
+      {/* Global emoji cursor */}
+      <div 
+        ref={emojiCursorRef}
+        className="fixed pointer-events-none z-[9999] text-2xl"
+        style={{ 
+          cursor: "none",
+          transform: "translate(-50%, -50%)",
+          transition: "all 0.1s ease",
+          opacity: "0",
+          left: "0px",
+          top: "0px"
+        }}
+        id="emoji-cursor"
+      >
+        🌟
+      </div>
 
       {/* Home section */}
       <div id="home" className="w-full">
         {/* Blue container with border */}
         <div
-          className="relative w-full max-w-[1500px] mx-auto bg-[#a7d8f2] border-4 border-[#141b33] shadow-2xl overflow-visible py-16 px-4 md:px-8"
+          className="relative w-full max-w-[1500px] mx-auto bg-[#a7d8f2] border-4 border-[#141b33] shadow-2xl overflow-visible py-8 sm:py-12 md:py-16 px-4 md:px-8"
           style={{ minHeight: "950px" }}
         >
           {/* Title banner */}
-          <div className="absolute left-0 right-0 z-10" style={{ top: "clamp(-30px, -3vh, -40px)" }}>
+          <div className="absolute left-0 right-0 z-10" style={{ top: "clamp(-20px, -2vh, -30px)" }}>
             <div className="relative mx-auto px-4 sm:px-6 md:px-8" style={{ 
               maxWidth: "clamp(300px, 90vw, 780px)",
               width: "100%"
             }}>
               <div
-                className="bg-[#141b33] text-white py-4 sm:py-5 md:py-6 px-4 sm:px-6 md:px-8 w-full"
+                className="bg-[#141b33] text-white py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 w-full"
                 style={{
-                  height: "clamp(80px, 10vh, 110px)",
+                  height: "clamp(60px, 8vh, 110px)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -127,7 +189,7 @@ export default function Home() {
                   style={{
                     lineHeight: "0.9",
                     letterSpacing: "-0.01em",
-                    fontSize: "clamp(1.75rem, 3.5vw, 2.9rem)",
+                    fontSize: "clamp(1.5rem, 3vw, 2.9rem)",
                   }}
                 >
                   THE FRIENDLY VERTICAL
@@ -137,18 +199,18 @@ export default function Home() {
           </div>
 
           {/* Hero description */}
-          <div className="relative z-30 mt-[650px] text-center px-4 mb-12">
+          <div className="relative z-30 mt-[600px] sm:mt-[650px] text-center px-4 mb-8 sm:mb-12">
             <div className="max-w-3xl mx-auto text-[#141b33]">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6"> Digital Magic, Minus the BS.</h2>
-              <p className="text-xl font-medium mb-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6"> Digital Magic, Minus the BS.</h2>
+              <p className="text-lg sm:text-xl font-medium mb-6 sm:mb-8">
                 We're your all-in-one creative tech squad mixing killer designs, code, and marketing strategy so you
                 don't have to juggle 10 freelancers.
               </p>
 
-              <div className="mt-8 flex justify-center">
+              <div className="mt-6 sm:mt-8 flex justify-center">
                 <Link
                   href="#contact"
-                  className="bg-[#141b33] text-white py-3 px-10 rounded-full text-lg font-bold hover:bg-[#1f2b4d] transition-colors"
+                  className="bg-[#141b33] text-white py-2 sm:py-3 px-8 sm:px-10 rounded-full text-base sm:text-lg font-bold hover:bg-[#1f2b4d] transition-colors"
                 >
                   Let's make cool stuff 
                 </Link>
@@ -158,7 +220,7 @@ export default function Home() {
         </div>
 
         {/* Card carousel positioned absolutely to overlay the container */}
-        <div className="absolute top-[500px] left-0 w-full z-20">
+        <div className="absolute top-[400px] sm:top-[500px] left-0 w-full z-20">
           <CardCarousel autoScrollInterval={5000}>{cards}</CardCarousel>
         </div>
       </div>
@@ -233,19 +295,6 @@ export default function Home() {
               }}
             >
               <AboutUsAnimation />
-              <SparkCursor
-                containerId="animation-container"
-                size={80}
-                textColor="#141b33"
-                backgroundColor="white"
-                iconColor="#ffb17a"
-                text="SPARK AN IDEA"
-                fontSize={19}
-                iconSize={24}
-                rotationSpeed={120}
-                followDelay={0.3}
-                textPadding={8}
-              />
             </div>
           </div>
         </div>

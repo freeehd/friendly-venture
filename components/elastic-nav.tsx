@@ -29,12 +29,12 @@ export default function ElasticNav() {
   const navLinks = isProjectsPage 
     ? [{ name: "Home", id: "home", href: "/" }]
     : [
-        { name: "Home", id: "home" },
-        { name: "Our Vibe", id: "values" },
+    { name: "Home", id: "home" },
+    { name: "Our Vibe", id: "values" },
         { name: "Dream Team", id: "dream-team" },
-        { name: "Hit Us Up", id: "contact" },
-        { name: "Projects", id: "projects", href: "/projects" },
-      ]
+    { name: "Hit Us Up", id: "contact" },
+    { name: "Projects", id: "projects", href: "/projects" },
+  ]
 
   return (
     <div

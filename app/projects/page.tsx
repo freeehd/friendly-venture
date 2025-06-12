@@ -1,25 +1,29 @@
+"use client"
 import Image from "next/image"
 import Link from "next/link"
 import ElasticNav from "@/components/elastic-nav"
 import { metadata } from "./metadata"
 import { ProjectsJsonLd } from "@/components/json-ld"
+import { useState } from "react"
 
-export { metadata }
 
 export default function ProjectsPage() {
+  // State for filtering
+  const [selectedCategory, setSelectedCategory] = useState<string>("All Projects")
+
   // Project data with more detailed information
   const projects = [
     {
       id: 1,
       title: "Swipe Right Fashion",
-      category: "E-commerce & Marketing",
+      category: "Comic Designing",
       client: "Fashion Startup",
       year: "2024",
       description: "Built a Shopify store + Instagram strategy that boosted sales by 300%.",
       fullDescription:
         "A complete digital transformation for a fashion startup, including custom Shopify development, brand identity design, and a comprehensive social media strategy that resulted in explosive growth.",
       services: ["Shopify Development", "Brand Design", "Social Media Strategy", "Content Creation"],
-      results: ["300% increase in sales", "50K+ Instagram followers", "4.8x ROAS on ads"],
+      results: ["150% increase in sales", "2.5K+ Instagram followers", "2.1x ROAS on ads"],
       testimonial: "These guys get it. Also, their Slack GIF game? 10/10.",
       clientName: "Sarah, Founder",
       backgroundColor: "#ffcdb2",
@@ -36,7 +40,7 @@ export default function ProjectsPage() {
       fullDescription:
         "Revolutionary Web3 platform connecting NFT technology with pet adoption, featuring smart contracts, custom marketplace, and integration with local animal shelters.",
       services: ["Smart Contract Development", "Web3 Frontend", "UI/UX Design", "Blockchain Integration"],
-      results: ["10K+ NFTs minted", "500+ pets adopted", "$2M+ raised for shelters"],
+      results: ["500+ NFTs minted", "25+ pets adopted", "15+ shelters partnered"],
       testimonial: "Went from idea to launch in 4 weeks. Sorcery.",
       clientName: "Mike, CEO",
       backgroundColor: "#c1e1c1",
@@ -53,7 +57,7 @@ export default function ProjectsPage() {
       fullDescription:
         "Gamified fitness application with social challenges, progress tracking, and AI-powered workout recommendations that revolutionized how users approach fitness.",
       services: ["Mobile App Development", "UI/UX Design", "Backend Development", "Gamification"],
-      results: ["10K+ downloads in month 1", "85% user retention", "4.9 App Store rating"],
+      results: ["1.2K+ downloads in month 1", "65% user retention", "4.6 App Store rating"],
       testimonial: "My users are actually excited about working out now. Magic!",
       clientName: "Lisa, Fitness Coach",
       backgroundColor: "#ffc8dd",
@@ -70,7 +74,7 @@ export default function ProjectsPage() {
       fullDescription:
         "Comprehensive rebranding project including logo design, brand guidelines, website redesign, and marketing collateral that transformed a corporate image.",
       services: ["Brand Strategy", "Logo Design", "Website Development", "Marketing Materials"],
-      results: ["250% increase in leads", "40% boost in brand recognition", "60% more qualified prospects"],
+      results: ["85% increase in leads", "30% boost in brand recognition", "40% more qualified prospects"],
       testimonial: "We went from boring to brilliant. Our competitors are shook.",
       clientName: "David, Marketing Director",
       backgroundColor: "#ffd166",
@@ -87,7 +91,7 @@ export default function ProjectsPage() {
       fullDescription:
         "Comprehensive UX research and redesign of a complex SaaS dashboard, focusing on user flow optimization and intuitive interface design.",
       services: ["UX Research", "UI Design", "Prototyping", "User Testing"],
-      results: ["20% reduction in churn", "35% faster task completion", "4.7/5 user satisfaction"],
+      results: ["15% reduction in churn", "25% faster task completion", "4.5/5 user satisfaction"],
       testimonial: "Our users finally understand our product. Game changer.",
       clientName: "Alex, Product Manager",
       backgroundColor: "#c8b6e2",
@@ -96,7 +100,7 @@ export default function ProjectsPage() {
     },
     {
       id: 6,
-      title: "Crypto Trading Platform",
+      title: "Digital Asset Trading Platform",
       category: "Fintech Development",
       client: "Fintech Startup",
       year: "2023",
@@ -104,7 +108,7 @@ export default function ProjectsPage() {
       fullDescription:
         "High-performance cryptocurrency trading platform with real-time market data, advanced charting, portfolio management, and institutional-grade security.",
       services: ["Full-Stack Development", "Security Implementation", "API Integration", "Real-time Data"],
-      results: ["$50M+ trading volume", "99.9% uptime", "Bank-level security"],
+      results: ["10K+ active traders", "99.5% uptime", "Bank-level security"],
       testimonial: "The platform handles our trading volume like a dream.",
       clientName: "Jordan, CTO",
       backgroundColor: "#a0c4ff",
@@ -114,14 +118,14 @@ export default function ProjectsPage() {
     {
       id: 7,
       title: "AI-Powered Content Platform",
-      category: "AI & Machine Learning",
+      category: "Digital Marketing",
       client: "Content Agency",
       year: "2024",
       description: "Developed an AI content generation platform that streamlined content creation workflows.",
       fullDescription:
         "AI-powered content creation platform with natural language processing, automated editing, and workflow management for content teams.",
       services: ["AI Development", "Machine Learning", "API Development", "Workflow Automation"],
-      results: ["70% faster content creation", "90% client satisfaction", "500+ active users"],
+      results: ["40% faster content creation", "85% client satisfaction", "50+ active users"],
       testimonial: "This AI actually understands our brand voice. Incredible.",
       clientName: "Maria, Creative Director",
       backgroundColor: "#ffb3ba",
@@ -138,7 +142,7 @@ export default function ProjectsPage() {
       fullDescription:
         "Comprehensive marketplace platform featuring vendor management, sustainability scoring, carbon footprint tracking, and community features.",
       services: ["Marketplace Development", "Vendor Portal", "Sustainability Metrics", "Community Features"],
-      results: ["200+ brands onboarded", "50K+ registered users", "Carbon neutral shipping"],
+      results: ["25+ brands onboarded", "3K+ registered users", "Carbon neutral shipping"],
       testimonial: "Finally, a platform that matches our values with great UX.",
       clientName: "Emma, Founder",
       backgroundColor: "#bae1ff",
@@ -149,6 +153,11 @@ export default function ProjectsPage() {
 
   // Get unique categories for filtering
   const categories = [...new Set(projects.map((project) => project.category))]
+
+  // Filter projects based on selected category
+  const filteredProjects = selectedCategory === "All Projects" 
+    ? projects 
+    : projects.filter(project => project.category === selectedCategory)
 
   return (
     <main className="min-h-screen flex flex-col items-center bg-white pt-24">
@@ -167,7 +176,7 @@ export default function ProjectsPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-[#141b33] mb-8">
             <div className="bg-white border-2 border-[#141b33] px-4 py-2 rounded-full">
-              <span className="font-bold">70+ Projects Delivered</span>
+              <span className="font-bold">30+ Projects Delivered</span>
             </div>
             <div className="bg-white border-2 border-[#141b33] px-4 py-2 rounded-full">
               <span className="font-bold">100% Client Satisfaction</span>
@@ -190,13 +199,25 @@ export default function ProjectsPage() {
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-[#141b33] mb-4">Filter by Category</h2>
           <div className="flex flex-wrap justify-center gap-3">
-            <button className="bg-[#141b33] text-white px-6 py-2 rounded-full font-bold hover:bg-[#1f2b4d] transition-colors">
+            <button 
+              onClick={() => setSelectedCategory("All Projects")}
+              className={`px-6 py-2 rounded-full font-bold transition-colors ${
+                selectedCategory === "All Projects"
+                  ? "bg-[#141b33] text-white"
+                  : "bg-white text-[#141b33] border-2 border-[#141b33] hover:bg-[#141b33] hover:text-white"
+              }`}
+            >
               All Projects
             </button>
             {categories.map((category) => (
               <button
                 key={category}
-                className="bg-white text-[#141b33] border-2 border-[#141b33] px-6 py-2 rounded-full font-bold hover:bg-[#141b33] hover:text-white transition-colors"
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full font-bold transition-colors ${
+                  selectedCategory === category
+                    ? "bg-[#141b33] text-white"
+                    : "bg-white text-[#141b33] border-2 border-[#141b33] hover:bg-[#141b33] hover:text-white"
+                }`}
               >
                 {category}
               </button>
@@ -209,7 +230,7 @@ export default function ProjectsPage() {
       <section className="w-full max-w-[1500px] mx-auto border-x-4 border-b-4 border-[#141b33] bg-white py-8 px-4 md:px-8">
         <h2 className="sr-only">Our Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <article
               key={project.id}
               id={`project-${project.id}`}

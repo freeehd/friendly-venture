@@ -50,19 +50,15 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
   const getCardVariants = useCallback((index: number): CardVariant[] => {
     // Default variants based on card index
     const defaultVariants = [
-      [
-        { id: 1, image: "/images/card-1-intern-female.png", alt: "Female Intern" },
-        { id: 2, image: "/images/card-1-intern-male.png", alt: "Male Intern" },
-      ],
-      [{ id: 3, image: "/images/card-2-developer.png", alt: "Developer" }],
-      [{ id: 4, image: "/images/card-3-finance.png", alt: "Finance" }],
-      [{ id: 5, image: "/images/card-4-project-manager.png", alt: "Project Manager" }],
-      [
-        { id: 6, image: "/images/card-5-designer-male.png", alt: "Male Designer" },
-        { id: 7, image: "/images/card-5-designer-female.png", alt: "Female Designer" },
-      ],
-      [{ id: 8, image: "/images/card-6-strategist.png", alt: "Strategist" }],
-      [{ id: 9, image: "/images/card-8-creative-director.png", alt: "Creative Director" }],
+      [{ id: 1, image: "/images/ux_ui.png", alt: "UX/UI Designer" },],
+      [{ id: 2, image: "/images/blockchain-dev.png", alt: "Blockchain Developer" },],
+      [{ id: 3, image: "/images/web-dev.png", alt: "Web Developer" }],
+      [{ id: 4, image: "/images/social-media.png", alt: "Social Media Manager" }],
+      [{ id: 5, image: "/images/media-buyer.png", alt: "Media Buyer" }],
+      [{ id: 6, image: "/images/graphic-des.png", alt: "Graphic Designer" },],
+      [{ id: 7, image: "/images/seo.png", alt: "SEO Specialist" },],
+      [{ id: 8, image: "/images/content-writer.png", alt: "Content Writer" }],
+      [{ id: 9, image: "/images/digital-growth.png", alt: "Digital Growth" }],
     ]
 
     return defaultVariants[index % defaultVariants.length] || defaultVariants[0]
@@ -372,8 +368,8 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
       // Calculate card sizing - adjust for mobile
       const isMobile = containerWidth < 768
       const baseCardWidth = isMobile
-        ? Math.min(200, containerWidth * 0.45) // Larger cards on mobile
-        : Math.min(280, containerWidth * 0.35) // Original size for desktop
+        ? Math.min(250, containerWidth * 0.55) // Increased from 200 to 250, and from 0.45 to 0.55
+        : Math.min(350, containerWidth * 0.4) // Increased from 280 to 350, and from 0.35 to 0.4
 
       // Adjust curve parameters for better spacing
       const curveDepth = 25 // Less pronounced curve
@@ -413,8 +409,8 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
       // Calculate horizontal spacing - DECREASED FROM PREVIOUS VERSION
       // Use a slightly smaller percentage of the container width for spacing
       const cardSpacing = isMobile
-        ? Math.min(200, containerWidth * 0.25) // Much tighter spacing on mobile
-        : Math.min(320, containerWidth * 0.38) // Original spacing for desktop
+        ? Math.min(250, containerWidth * 0.3) // Increased from 200 to 250, and from 0.25 to 0.3
+        : Math.min(380, containerWidth * 0.45) // Increased from 320 to 380, and from 0.38 to 0.45
 
       const xOffset = relativePosition * cardSpacing
 
@@ -500,7 +496,7 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
   return (
     <div
       className="relative w-full overflow-visible py-4 md:py-8"
-      style={{ zIndex: 9999, marginTop: "-5rem", md: { marginTop: "-7rem" } }}
+      style={{ zIndex: 9999, marginTop: "-5rem" }}
       ref={containerRef}
     >
       <div

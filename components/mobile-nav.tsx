@@ -16,12 +16,12 @@ export default function MobileNav({ isScrolled, activeLink, setActiveLink, isPro
   const navLinks = isProjectsPage 
     ? [{ name: "Home", id: "home", href: "/" }]
     : [
-        { name: "Home", id: "home" },
-        { name: "Our Vibe", id: "values" },
-        { name: "Dream Team", id: "dream-team" },
+    { name: "Home", id: "home" },
+    { name: "Our Vibe", id: "values" },
+    { name: "Dream Team", id: "dream-team" },
         { name: "Hit Us Up", id: "contact" },
-        { name: "Projects", id: "projects", href: "/projects" },
-      ]
+    { name: "Projects", id: "projects", href: "/projects" },
+  ]
 
   // Close menu when clicking outside or on link
   useEffect(() => {
@@ -83,10 +83,10 @@ export default function MobileNav({ isScrolled, activeLink, setActiveLink, isPro
         }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.id}
-              href={link.href || `#${link.id}`}
+            {navLinks.map((link) => (
+              <Link
+                key={link.id}
+                href={link.href || `#${link.id}`}
               onClick={(e) => {
                 if (!link.href) {
                   e.preventDefault()
@@ -99,11 +99,11 @@ export default function MobileNav({ isScrolled, activeLink, setActiveLink, isPro
                 activeLink === link.id || (isProjectsPage && link.id === "home")
                   ? "text-[#141b33] scale-110"
                   : "text-gray-600 hover:text-[#141b33] hover:scale-105"
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
         </div>
       </div>
     </div>
