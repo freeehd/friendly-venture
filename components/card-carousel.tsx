@@ -54,8 +54,8 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
       [{ id: 2, image: "/images/blockchain-dev.png", alt: "Blockchain Developer" },],
       [{ id: 3, image: "/images/web-dev.png", alt: "Web Developer" }],
       [{ id: 4, image: "/images/social-media.png", alt: "Social Media Manager" }],
-      [{ id: 5, image: "/images/media-buyer.png", alt: "Media Buyer" }],
-      [{ id: 6, image: "/images/graphic-des.png", alt: "Graphic Designer" },],
+      [{ id: 5, image: "/images/graphic-des.png", alt: "Graphic Designer" },],
+      [{ id: 6, image: "/images/media-buyer.png", alt: "Media Buyer" }],
       [{ id: 7, image: "/images/seo.png", alt: "SEO Specialist" },],
       [{ id: 8, image: "/images/content-writer.png", alt: "Content Writer" }],
       [{ id: 9, image: "/images/digital-growth.png", alt: "Digital Growth" }],
@@ -420,8 +420,8 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
       // Calculate opacity based on distance from center
       const opacity =
         Math.abs(relativePosition) > 2
-          ? Math.max(0, 1 - (Math.abs(relativePosition) - 2) * 0.5) // More gradual fade-in from sides
-          : Math.min(1, 1 - (Math.abs(relativePosition) - 0.5) * 0.2) // Slight fade even for cards close to center
+          ? Math.max(0, 1 - (Math.abs(relativePosition) - 2) * 0.2) // More gradual fade-in from sides
+          : Math.min(1, 1 - (Math.abs(relativePosition) - 0.5) * 0.1) // Slight fade even for cards close to center
 
       // Add drop shadow with zero blur
       // Format: box-shadow: h-offset v-offset blur spread color;

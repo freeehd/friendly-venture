@@ -255,7 +255,7 @@ export default function Home() {
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">✨ Talent-First</h3>
                     <p className="text-sm sm:text-base md:text-lg">
-                      We cherry-pick the dopest designers, devs, and marketers—no mediocre "yes men" here.
+                      We cherry-pick the dopest designers, devs, and marketers, no mediocre "yes men" here.
                     </p>
                   </div>
 
