@@ -54,9 +54,11 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
       [{ id: 2, image: "/images/blockchain-dev.png", alt: "Blockchain Developer" },],
       [{ id: 3, image: "/images/web-dev.png", alt: "Web Developer" }],
       [{ id: 4, image: "/images/social-media.png", alt: "Social Media Manager" }],
-      [{ id: 5, image: "/images/graphic-des.png", alt: "Graphic Designer" },],
+            [{ id: 5, image: "/images/seo.png", alt: "SEO Specialist" },],
+
       [{ id: 6, image: "/images/media-buyer.png", alt: "Media Buyer" }],
-      [{ id: 7, image: "/images/seo.png", alt: "SEO Specialist" },],
+            [{ id: 7, image: "/images/graphic-des.png", alt: "Graphic Designer" },],
+
       [{ id: 8, image: "/images/content-writer.png", alt: "Content Writer" }],
       [{ id: 9, image: "/images/digital-growth.png", alt: "Digital Growth" }],
     ]
