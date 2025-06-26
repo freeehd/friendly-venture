@@ -50,14 +50,15 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
   const getCardVariants = useCallback((index: number): CardVariant[] => {
     // Default variants based on card index
     const defaultVariants = [
-      [{ id: 1, image: "/images/ux_ui.png", alt: "UX/UI Designer" },],
-      [{ id: 2, image: "/images/blockchain-dev.png", alt: "Blockchain Developer" },],
+      [{ id: 1, image: "/images/ux_ui.png", alt: "UX/UI Designer" }],
+      [{ id: 2, image: "/images/blockchain-dev.png", alt: "Blockchain Developer" }],
       [{ id: 3, image: "/images/web-dev.png", alt: "Web Developer" }],
       [{ id: 4, image: "/images/social-media.png", alt: "Social Media Manager" }],
-            [{ id: 5, image: "/images/seo.png", alt: "SEO Specialist" },],
 
-      [{ id: 6, image: "/images/media-buyer.png", alt: "Media Buyer" }],
-            [{ id: 7, image: "/images/graphic-des.png", alt: "Graphic Designer" },],
+      [{ id: 5, image: "/images/media-buyer.png", alt: "Media Buyer" }],
+      [{ id: 6, image: "/images/seo.png", alt: "SEO Specialist" }],
+
+      [{ id: 7, image: "/images/graphic-des.png", alt: "Graphic Designer" }],
 
       [{ id: 8, image: "/images/content-writer.png", alt: "Content Writer" }],
       [{ id: 9, image: "/images/digital-growth.png", alt: "Digital Growth" }],
@@ -367,15 +368,30 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
   // Calculate card styles
   const getCardStyle = useCallback(
     (relativePosition: number, isHovered: boolean) => {
-      // Calculate card sizing - adjust for mobile
+      // Calculate card sizing - adjust for mobile with better constraints
       const isMobile = containerWidth < 768
-      const baseCardWidth = isMobile
-        ? Math.min(250, containerWidth * 0.55) // Increased from 200 to 250, and from 0.45 to 0.55
-        : Math.min(350, containerWidth * 0.4) // Increased from 280 to 350, and from 0.35 to 0.4
+      const baseCardWidth = isMobile ? Math.min(280, containerWidth * 0.5) : Math.min(350, containerWidth * 0.35)
+
+      // Calculate the maximum safe spacing to prevent overflow
+      // We need to account for the card width and ensure the furthest cards don't exceed container bounds
+      const cardHalfWidth = baseCardWidth / 2
+      const safeContainerWidth = containerWidth - cardHalfWidth * 2 // Leave space for card edges
+
+      // Calculate how many cards we're showing on each side
+      const visibleRange = isMobile ? 1 : 2
+      const maxRelativePosition = visibleRange
+
+      // Calculate safe spacing - ensure the furthest card doesn't exceed bounds
+      const maxSafeSpacing = maxRelativePosition > 0 ? safeContainerWidth / (maxRelativePosition * 2) : 0
+
+      // Use the smaller of our desired spacing or the safe spacing
+      const desiredSpacing = isMobile ? Math.min(220, containerWidth * 0.32) : Math.min(340, containerWidth * 0.38)
+
+      const cardSpacing = Math.min(desiredSpacing, maxSafeSpacing)
 
       // Adjust curve parameters for better spacing
-      const curveDepth = 25 // Less pronounced curve
-      const rotationFactor = 8 // Less rotation
+      const curveDepth = 25
+      const rotationFactor = 8
 
       // Check if this is the center card
       const isCenter = Math.abs(relativePosition) < 0.1
@@ -383,37 +399,26 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
       const isRightSide = relativePosition > 0.1
 
       // Calculate vertical position along the parabolic curve
-      // Add hover effect - raise the card up by 15px when hovered (center card only)
       const hoverLift = isCenter && isHovered ? -15 : 0
       const yOffset = Math.pow(relativePosition, 2) * curveDepth + hoverLift
 
       // Calculate rotation (tilt) based on position
-      // Add hover effect - tilt left cards more to the left, right cards more to the right
       let rotation = relativePosition * rotationFactor
 
       if (isHovered) {
         if (isLeftSide) {
-          // Add extra tilt to the left for left cards
-          // More pronounced tilt for cards further away
           const tiltAmount = Math.min(Math.abs(relativePosition), 2) * 1.5
           rotation -= tiltAmount
         } else if (isRightSide) {
-          // Add extra tilt to the right for right cards
-          // More pronounced tilt for cards further away
           const tiltAmount = Math.min(Math.abs(relativePosition), 2) * 1.5
           rotation += tiltAmount
         }
       }
 
-      // Calculate scale based on distance from center - less dramatic scaling
-      const scale = 1 - Math.min(Math.abs(relativePosition) * 0.06, 0.25) // More dramatic scaling for side cards
+      // Calculate scale based on distance from center
+      const scale = 1 - Math.min(Math.abs(relativePosition) * 0.06, 0.25)
 
-      // Calculate horizontal spacing - DECREASED FROM PREVIOUS VERSION
-      // Use a slightly smaller percentage of the container width for spacing
-      const cardSpacing = isMobile
-        ? Math.min(250, containerWidth * 0.3) // Increased from 200 to 250, and from 0.25 to 0.3
-        : Math.min(380, containerWidth * 0.45) // Increased from 320 to 380, and from 0.38 to 0.45
-
+      // Calculate horizontal offset with safe spacing
       const xOffset = relativePosition * cardSpacing
 
       // Calculate z-index to ensure proper stacking
@@ -422,21 +427,19 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
       // Calculate opacity based on distance from center
       const opacity =
         Math.abs(relativePosition) > 2
-          ? Math.max(0, 1 - (Math.abs(relativePosition) - 2) * 0.2) // More gradual fade-in from sides
-          : Math.min(1, 1 - (Math.abs(relativePosition) - 0.5) * 0.1) // Slight fade even for cards close to center
+          ? Math.max(0, 1 - (Math.abs(relativePosition) - 2) * 0.2)
+          : Math.min(1, 1 - (Math.abs(relativePosition) - 0.5) * 0.1)
 
       // Add drop shadow with zero blur
-      // Format: box-shadow: h-offset v-offset blur spread color;
       const boxShadow = isCenter
         ? isHovered
-          ? "0 15px 0 0 rgba(0, 0, 0, 0.4)" // Zero-blur shadow when hovered, more offset
-          : "0 8px 0 0 rgba(0, 0, 0, 0.3)" // Zero-blur shadow for center card
+          ? "0 15px 0 0 rgba(0, 0, 0, 0.4)"
+          : "0 8px 0 0 rgba(0, 0, 0, 0.3)"
         : isHovered
-          ? "0 8px 0 0 rgba(0, 0, 0, 0.3)" // Slightly larger shadow for hovered side cards
-          : "0 4px 0 0 rgba(0, 0, 0, 0.2)" // Zero-blur shadow for other cards
+          ? "0 8px 0 0 rgba(0, 0, 0, 0.3)"
+          : "0 4px 0 0 rgba(0, 0, 0, 0.2)"
 
-      // Add transition for hover effects only (not for position animation)
-      // Increased transition duration from 0.3s to 0.6s for slower effect
+      // Add transition for hover effects only
       const transition = "box-shadow 0.6s ease, transform 0.6s ease, opacity 0.8s ease"
 
       return {
@@ -446,7 +449,7 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
         boxShadow,
         transition,
         width: `${baseCardWidth}px`,
-        height: `${baseCardWidth * 1.4}px`, // Maintain aspect ratio
+        height: `${baseCardWidth * 1.4}px`,
       }
     },
     [containerWidth],
@@ -464,7 +467,8 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
   // Determine visible cards
   const getVisibleCards = useCallback(() => {
     const isMobile = containerWidth < 768
-    const visibleRange = isMobile ? 1 : 2 // Show fewer cards on mobile (3 total vs 5 total)
+    const isSmall = containerWidth < 480
+    const visibleRange = isSmall ? 1 : isMobile ? 1 : 2 // Show only 1 card on each side for small screens
     const cards = []
 
     for (let i = activeIndex - visibleRange; i <= activeIndex + visibleRange; i++) {
@@ -497,12 +501,12 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
   // Render carousel
   return (
     <div
-      className="relative w-full overflow-visible py-4 md:py-8"
+      className="relative w-full max-w-full py-4 md:py-8" // Removed overflow-hidden
       style={{ zIndex: 9999, marginTop: "-5rem" }}
       ref={containerRef}
     >
       <div
-        className="relative w-full h-[300px] md:h-[400px] flex items-center justify-center"
+        className="relative w-full max-w-full h-[300px] md:h-[400px] flex items-center justify-center" // Removed overflow-hidden
         style={{ transform: "translateY(-5rem)" }}
       >
         {getVisibleCards().map(({ index, actualIndex }) => {
@@ -526,9 +530,11 @@ export default function CardCarousel({ children, autoScrollInterval = 5000 }: Ca
               style={{
                 ...style,
                 pointerEvents: isClickable ? "auto" : "none",
-                // Center the card without using translate-x-1/2
                 left: "50%",
                 marginLeft: `-${Number.parseInt(style.width) / 2}px`,
+                maxWidth: "90vw",
+                minWidth: 0,
+                boxSizing: "border-box",
               }}
               onClick={(e) => {
                 e.stopPropagation()

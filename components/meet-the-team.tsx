@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 
 // Update the TeamMember interface to match the new structure:
@@ -203,7 +203,7 @@ export default function MeetTheTeam() {
     //     "Managed $2M+ budgets across multiple projects",
     //   ],
     // },
-   
+
     // {
     //   id: 11,
     //   designation: "SENIOR DESIGNER",
@@ -326,6 +326,25 @@ export default function MeetTheTeam() {
     setModalMousePosition({ x, y })
   }
 
+  // Add this useEffect after the existing useEffect hooks
+  useEffect(() => {
+    if (showModal) {
+      // Lock scroll when modal opens
+      document.body.style.overflow = "hidden"
+      document.body.style.paddingRight = "0px" // Prevent layout shift
+    } else {
+      // Restore scroll when modal closes
+      document.body.style.overflow = "unset"
+      document.body.style.paddingRight = "0px"
+    }
+
+    // Cleanup function to restore scroll on unmount
+    return () => {
+      document.body.style.overflow = "unset"
+      document.body.style.paddingRight = "0px"
+    }
+  }, [showModal])
+
   return (
     <div
       id="dream-team"
@@ -377,8 +396,7 @@ export default function MeetTheTeam() {
                 animationDelay: `${index * 150}ms`, // Increased stagger for better effect
               }}
             >
-              <div className="w-full h-[400px] md:h-[420px] overflow-hidden rounded-2xl border-4 border-white shadow-2xl relative group-hover:shadow-3xl transition-shadow duration-300">
-                <div
+      <div className="w-full h-[300px] md:h-[420px] overflow-hidden rounded-2xl border-4 border-white shadow-2xl relative group-hover:shadow-3xl transition-shadow duration-300">                <div
                   className="w-full h-full p-6 flex flex-col relative"
                   style={{ backgroundColor: member.backgroundColor }}
                 >
@@ -458,20 +476,20 @@ export default function MeetTheTeam() {
         </button>
       </div>
 
-      {/* Enhanced modal */}
+      {/* Enhanced mobile-responsive modal with physics animations */}
       {showModal && selectedMember && (
         <div
-          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 backdrop-blur-sm overflow-y-auto"
           onClick={closeModal}
           onMouseMove={handleModalMouseMove}
         >
           <div
-            className="relative max-w-5xl w-full flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10"
+            className={`relative w-full min-h-screen lg:min-h-0 lg:max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-10 p-4 lg:p-8`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Enhanced close button */}
+            {/* Enhanced close button - positioned better for mobile */}
             <button
-              className="absolute top-4 right-4 text-white bg-[#141b33] rounded-full w-12 h-12 flex items-center justify-center z-10 hover:bg-[#1f2b4d] transition-colors duration-200 shadow-lg"
+              className="fixed top-4 right-4 lg:absolute lg:top-4 lg:right-4 text-white bg-[#141b33] rounded-full w-12 h-12 flex items-center justify-center z-20 hover:bg-[#1f2b4d] transition-colors duration-200 shadow-lg"
               onClick={closeModal}
             >
               <svg
@@ -490,17 +508,21 @@ export default function MeetTheTeam() {
               </svg>
             </button>
 
-            {/* Enhanced character card */}
+            {/* Enhanced character card with physics animation - mobile responsive */}
             <div
               ref={characterCardRef}
-              className="w-[280px] md:w-[320px] h-[420px] md:h-[480px] rounded-2xl border-4 border-white shadow-2xl physics-card-left"
+              className="w-full max-w-[280px] sm:max-w-[320px] lg:w-[320px] h-[350px] sm:h-[420px] lg:h-[480px] rounded-2xl border-4 border-white shadow-2xl physics-card-left flex-shrink-0"
               style={{
                 backgroundColor: selectedMember.backgroundColor,
-                transform: `perspective(1000px) rotateY(${modalMousePosition.x * 15}deg) rotateX(${modalMousePosition.y * -15}deg) rotate(-5deg)`,
+                transform:
+                  window.innerWidth >= 1024
+                    ? `perspective(1000px) rotateY(${modalMousePosition.x * 15}deg) rotateX(${modalMousePosition.y * -15}deg) rotate(-5deg)`
+                    : "rotate(-2deg)",
                 transition: "transform 0.2s ease-out",
               }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="w-full h-full p-6 flex flex-col relative">
+              <div className="w-full h-full p-4 sm:p-6 flex flex-col relative">
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none rounded-2xl" />
 
@@ -509,7 +531,10 @@ export default function MeetTheTeam() {
                   <div
                     className="absolute inset-0 transition-transform duration-200"
                     style={{
-                      transform: `translate(${modalMousePosition.x * -15}px, ${modalMousePosition.y * -15}px) scale(1.05)`,
+                      transform:
+                        window.innerWidth >= 1024
+                          ? `translate(${modalMousePosition.x * -15}px, ${modalMousePosition.y * -15}px) scale(1.05)`
+                          : "scale(1.05)",
                     }}
                   >
                     <Image
@@ -523,8 +548,8 @@ export default function MeetTheTeam() {
 
                 {/* Enhanced name and role */}
                 <div className="mt-auto relative z-10">
-                  <div className="bg-[#141b33] text-white py-3 px-4 text-center rounded-xl shadow-lg">
-                    <h3 className="text-lg md:text-2xl font-bold uppercase tracking-wide">
+                  <div className="bg-[#141b33] text-white py-2 sm:py-3 px-3 sm:px-4 text-center rounded-xl shadow-lg">
+                    <h3 className="text-sm sm:text-lg lg:text-2xl font-bold uppercase tracking-wide leading-tight">
                       {selectedMember.designation}
                     </h3>
                   </div>
@@ -532,65 +557,75 @@ export default function MeetTheTeam() {
               </div>
             </div>
 
-            {/* Enhanced description card */}
+            {/* Enhanced description card with physics animation - mobile responsive */}
             <div
               ref={descriptionCardRef}
-              className="w-[320px] md:w-[450px] h-[550px] md:h-[650px] rounded-2xl border-4 border-white shadow-2xl bg-[#141b33] text-white p-6 md:p-8 physics-card-right overflow-y-auto"
+              className="w-full max-w-[320px] sm:max-w-[400px] lg:w-[450px] h-[500px] sm:h-[550px] lg:h-[650px] rounded-2xl border-4 border-white shadow-2xl bg-[#141b33] text-white physics-card-right flex-shrink-0"
               style={{
-                transform: `perspective(1000px) rotateY(${modalMousePosition.x * 15}deg) rotateX(${modalMousePosition.y * -15}deg) rotate(5deg)`,
+                transform:
+                  window.innerWidth >= 1024
+                    ? `perspective(1000px) rotateY(${modalMousePosition.x * 15}deg) rotateX(${modalMousePosition.y * -15}deg) rotate(5deg)`
+                    : "rotate(2deg)",
                 transition: "transform 0.2s ease-out",
               }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-2xl md:text-3xl font-bold mb-3 text-yellow-400">{selectedMember.designation}</h2>
+              <div className="p-4 sm:p-6 lg:p-8 h-full overflow-y-auto">
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3 text-yellow-400 leading-tight">
+                  {selectedMember.designation}
+                </h2>
 
-              <h3 className="text-lg md:text-xl font-bold text-gray-300 mb-6 leading-relaxed">
-                {selectedMember.headline}
-              </h3>
+                <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-300 mb-4 sm:mb-6 leading-relaxed">
+                  {selectedMember.headline}
+                </h3>
 
-              <div className="mb-6">
-                <h4 className="text-lg font-bold mb-3 text-yellow-400 flex items-center">
-                  <span className="mr-2">🎯</span>
-                  What We Do:
-                </h4>
-                <p className="text-sm md:text-base mb-4 leading-relaxed text-gray-200">{selectedMember.whatWeDo}</p>
-              </div>
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="text-base sm:text-lg font-bold mb-2 sm:mb-3 text-yellow-400 flex items-center">
+                    <span className="mr-2">🎯</span>
+                    What We Do:
+                  </h4>
+                  <p className="text-sm sm:text-base mb-3 sm:mb-4 leading-relaxed text-gray-200">
+                    {selectedMember.whatWeDo}
+                  </p>
+                </div>
 
-              <div className="mb-6">
-                <h4 className="text-lg font-bold mb-3 text-yellow-400 flex items-center">
-                  <span className="mr-2">⚡</span>
-                  Expertise Includes:
-                </h4>
-                <ul className="text-sm md:text-base space-y-2">
-                  {selectedMember.expertiseIncludes.map((skill, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-yellow-400 mr-3 mt-1">•</span>
-                      <span className="text-gray-200">{skill}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="text-base sm:text-lg font-bold mb-2 sm:mb-3 text-yellow-400 flex items-center">
+                    <span className="mr-2">⚡</span>
+                    Expertise Includes:
+                  </h4>
+                  <ul className="text-sm sm:text-base space-y-1 sm:space-y-2">
+                    {selectedMember.expertiseIncludes.map((skill, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-yellow-400 mr-2 sm:mr-3 mt-1 flex-shrink-0">•</span>
+                        <span className="text-gray-200">{skill}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              <div className="mb-6">
-                <h4 className="text-lg font-bold mb-3 text-yellow-400 flex items-center">
-                  <span className="mr-2">🏆</span>
-                  Past Work:
-                </h4>
-                <ul className="text-sm md:text-base space-y-3 mb-6">
-                  {selectedMember.pastWork.map((work, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-yellow-400 mr-3 mt-1">•</span>
-                      <span className="text-gray-200">{work}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#141b33] py-3 px-6 rounded-xl font-bold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-200 transform hover:scale-105 shadow-lg"
-                  onClick={() => {
-                    window.open("/projects", "_blank")
-                  }}
-                >
-                  View All Projects →
-                </button>
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="text-base sm:text-lg font-bold mb-2 sm:mb-3 text-yellow-400 flex items-center">
+                    <span className="mr-2">🏆</span>
+                    Past Work:
+                  </h4>
+                  <ul className="text-sm sm:text-base space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+                    {selectedMember.pastWork.map((work, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-yellow-400 mr-2 sm:mr-3 mt-1 flex-shrink-0">•</span>
+                        <span className="text-gray-200">{work}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#141b33] py-2 sm:py-3 px-4 sm:px-6 rounded-xl font-bold hover:from-yellow-300 hover:to-yellow-400 transition-all duration-200 transform hover:scale-105 shadow-lg text-sm sm:text-base"
+                    onClick={() => {
+                      window.open("/projects", "_blank")
+                    }}
+                  >
+                    View All Projects →
+                  </button>
+                </div>
               </div>
             </div>
           </div>
